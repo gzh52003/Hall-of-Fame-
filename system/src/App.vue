@@ -25,7 +25,6 @@
             style="background-color:rgb(211,220,230)"
           >
             <template v-for="item in links">
-
               <!-- 单层路径 -->
               <el-menu-item
                 :index="item.path"
@@ -50,7 +49,6 @@
                   v-for="chi in item.childList"
                 >{{chi.title}}</el-menu-item>
               </el-submenu>
-
             </template>
           </el-menu>
         </el-aside>
@@ -95,17 +93,49 @@ export default {
               title: "添加用户",
               path: "/usAdd",
             },
+            {
+              title: "修改用户",
+              path: "/usAlter",
+            },
           ],
         },
         {
           title: "商品管理",
           path: "/goods",
           icon: "el-icon-box",
+          childList: [
+            {
+              title: "商品列表",
+              path: "/gdsList",
+            },
+            {
+              title: "添加商品",
+              path: "/gdsAdd",
+            },
+            {
+              title: "修改商品",
+              path: "/gdsAlter",
+            },
+          ],
         },
         {
           title: "订单管理",
           path: "/order",
           icon: "el-icon-s-claim",
+          childList: [
+            {
+              title: "订单列表",
+              path: "/ordList",
+            },
+            {
+              title: "添加订单",
+              path: "/ordAdd",
+            },
+            {
+              title: "修改订单",
+              path: "/ordAlter",
+            },
+          ],
         },
       ],
       // idx: "/home",
@@ -175,7 +205,7 @@ body {
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid green;
-  margin-bottom: 8px;
+    margin-bottom: 8px;
   }
 }
 </style>

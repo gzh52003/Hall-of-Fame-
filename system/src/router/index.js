@@ -1,11 +1,22 @@
 import Vue from 'vue' //引入vue
-import home from './../components/home' //引入组件
+import home from './../components/home' //首页
+//用户管理
 import user from '../components/user'
-import goods from './../components/goods'
-import notfound from '../components/notfound.vue'
-import order from '../components/order'
 import usList from '../components/user/usList.vue'
 import usAdd from '../components/user/usAdd.vue'
+import usAlter from '../components/user/usAlter.vue'
+//商品管理
+import goods from './../components/goods'
+import gdsList from '../components/goods/gdsList'
+import gdsAdd from '../components/goods/gdsAdd'
+import gdsAlter from '../components/goods/gdsAlter'
+//订单管理
+import order from '../components/order'
+import ordList from '../components/order/ordList'
+import ordAdd from '../components/order/ordAdd'
+import ordAlter from '../components/order/ordAlter'
+
+import notfound from '../components/notfound.vue'
 //1、引入路由组件
 import VueRouter from 'vue-router'
 
@@ -29,26 +40,65 @@ const router = new VueRouter({
       component: user,
       children: [
         {
-          path:'',
-          redirect:usList 
+          path: '',
+          redirect: usList
         },
         {
-          path:'usList', //用户列表
-          component:usList
+          //用户列表
+          path: 'usList',
+          component: usList
         },
         {
-          path:'usAdd',  //添加用户
-          component:usAdd
+          //添加用户
+          path: 'usAdd',
+          component: usAdd
         },
+        {
+          //修改用户
+          path: 'usAlter',
+          component: usAlter
+        }
       ]
     },
     {
       path: '/goods', //商品管理
-      component: goods
+      component: goods,
+      children: [
+        {
+          //商品列表
+          path: 'gdsList',
+          component: gdsList
+        }, {
+          //添加商品
+          path: 'gdsAdd',
+          component: gdsAdd
+        }, {
+          //修改商品
+          path: 'gdsAlter',
+          component: gdsAlter
+        }
+      ]
     },
     {
       path: '/order', //订单管理
-      component: order
+      component: order,
+      children: [
+        {
+          //订单列表
+          path: 'ordList',
+          component: ordList
+        },
+        {
+          //添加订单
+          path: 'ordAdd',
+          component: ordAdd
+        },
+        {
+          //修改订单
+          path: 'ordAlter',
+          component: ordAlter
+        },
+      ]
     },
     {
       path: '/404',
