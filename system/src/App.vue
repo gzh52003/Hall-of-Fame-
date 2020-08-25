@@ -2,70 +2,9 @@
 /* 用编程式导航做单页面 */
 <template>
   <div id="app">
-    <el-container>
-      <!-- 头部 -->
-      <el-header style="padding:0">
-        <el-row style="height:100%">
-          <el-col :span="12" style="height:100%">
-            <i class="el-icon-s-tools"></i>后台管理系统
-          </el-col>
-          <el-col :span="12" style="height:100%">
-            <el-link type="primary" :underline="false">注册</el-link>
-            <el-link type="primary" :underline="false">登录</el-link>
-          </el-col>
-        </el-row>
-      </el-header>
 
-      <el-container>
-        <!--导航栏 -->
-        <el-aside width="200px">
-          <el-menu
-            active-text-color="red"
-            :default-active="activeIndex"
-            style="background-color:rgb(211,220,230)"
-          >
-            <template v-for="item in links">
-              <!-- 单层路径 -->
-              <el-menu-item
-                :index="item.path"
-                :key="item.path"
-                @click="goto(item.path)"
-                v-if="!item.childList"
-              >
-                <i :class="item.icon"></i>
-                <span slot="title">{{item.title}}</span>
-              </el-menu-item>
-
-              <!-- 多层路径 -->
-              <el-submenu :key="item.path" :index="item.path" @click="goto(item.path)" v-else>
-                <template v-slot:title>
-                  <i :class="item.icon"></i>
-                  {{item.title}}
-                </template>
-                <el-menu-item
-                  :key="chi.path"
-                  :index="item.path+chi.path"
-                  @click="goto(item.path+chi.path)"
-                  v-for="chi in item.childList"
-                >{{chi.title}}</el-menu-item>
-              </el-submenu>
-            </template>
-          </el-menu>
-        </el-aside>
-
-        <!-- 内容区 -->
-        <el-main style="padding-top:6px">
-          <el-breadcrumb separator-class="el-icon-arrow-right">
-            <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-            <el-breadcrumb-item>活动管理</el-breadcrumb-item>
-            <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-            <el-breadcrumb-item>活动详情</el-breadcrumb-item>
-          </el-breadcrumb>
-          <!-- 组件渲染位置 -->
-          <router-view></router-view>
-        </el-main>
-      </el-container>
-    </el-container>
+    <!-- 组件渲染位置 -->
+    <router-view />
   </div>
 </template>
 
@@ -138,7 +77,6 @@ export default {
           ],
         },
       ],
-      // idx: "/home",
       activeIndex: "/home",
     };
   },
