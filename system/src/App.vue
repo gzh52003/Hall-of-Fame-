@@ -15,7 +15,6 @@
           </el-col>
         </el-row>
       </el-header>
-
       <el-container>
         <!--导航栏 -->
         <el-aside width="200px">
@@ -35,7 +34,6 @@
                 <i :class="item.icon"></i>
                 <span slot="title">{{item.title}}</span>
               </el-menu-item>
-
               <!-- 多层路径 -->
               <el-submenu :key="item.path" :index="item.path" @click="goto(item.path)" v-else>
                 <template v-slot:title>
@@ -52,7 +50,6 @@
             </template>
           </el-menu>
         </el-aside>
-
         <!-- 内容区 -->
         <el-main style="padding-top:6px">
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -94,11 +91,8 @@ export default {
               path: "/usAdd",
             },
             {
-              title: "修改用户",
+              title: "编辑用户",
               path: "/usAlter",
-            },{
-              title: "查询用户",
-              path: "/add",
             }
           ],
         },
