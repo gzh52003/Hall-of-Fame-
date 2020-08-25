@@ -96,7 +96,10 @@ export default {
             {
               title: "修改用户",
               path: "/usAlter",
-            },
+            },{
+              title: "查询用户",
+              path: "/add",
+            }
           ],
         },
         {
