@@ -6,12 +6,24 @@
       <!-- 头部 -->
       <el-header style="padding:0">
         <el-row style="height:100%">
-          <el-col :span="12" style="height:100%">
+          <el-col
+            :span="12"
+            style="height:100%"
+          >
             <i class="el-icon-s-tools"></i>后台管理系统
           </el-col>
-          <el-col :span="12" style="height:100%">
-            <el-link type="primary" :underline="false">注册</el-link>
-            <el-link type="primary" :underline="false">登录</el-link>
+          <el-col
+            :span="12"
+            style="height:100%"
+          >
+            <el-link
+              type="primary"
+              :underline="false"
+            >注册</el-link>
+            <el-link
+              type="primary"
+              :underline="false"
+            >登录</el-link>
           </el-col>
         </el-row>
       </el-header>
@@ -35,7 +47,12 @@
                 <span slot="title">{{item.title}}</span>
               </el-menu-item>
               <!-- 多层路径 -->
-              <el-submenu :key="item.path" :index="item.path" @click="goto(item.path)" v-else>
+              <el-submenu
+                :key="item.path"
+                :index="item.path"
+                @click="goto(item.path)"
+                v-else
+              >
                 <template v-slot:title>
                   <i :class="item.icon"></i>
                   {{item.title}}

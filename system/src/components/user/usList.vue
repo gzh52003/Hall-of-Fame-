@@ -1,43 +1,57 @@
 <template>
   <div>
-    <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px">
-  <el-col :span="6">
-    <el-input v-model="formLabelAlign.region" placeholder="通过ID查询"></el-input>
-  </el-col>
-  <el-col :span="6" style="margin-left:10px">
-      <el-button type="primary" icon="el-icon-search">搜索</el-button>
-  </el-col>  
- </el-row> 
+    <el-row
+      :gutter="100"
+      type="flex"
+      justify="left"
+      style="margin:30px 0px"
+    >
+      <el-col :span="6">
+        <el-input
+          v-model="formLabelAlign.region"
+          placeholder="通过ID查询"
+        ></el-input>
+      </el-col>
+      <el-col
+        :span="6"
+        style="margin-left:10px"
+      >
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+        >搜索</el-button>
+      </el-col>
+    </el-row>
     <el-table
       ref="multipleTable"
       :data="userList.slice((currentPage4-1)*pagesize,currentPage4*pagesize) "
       tooltip-effect="dark"
       style="width: 100%"
       @selection-change="handleSelectionChange"
-      :default-sort = "{prop: 'date', order: 'descending'}"
+      :default-sort="{prop: 'date', order: 'descending'}"
     >
       <el-table-column
         type="selection"
         width="55"
       ></el-table-column>
       <el-table-column
-      prop="date"
-      label="日期"
-      sortable
-      width="180"
+        prop="date"
+        label="日期"
+        sortable
+        width="180"
       >
         <template slot-scope="scope">{{ scope.row.date }}</template>
       </el-table-column>
       <el-table-column
-      prop="name"
-      label="姓名"
-      sortable
-      width="180"
+        prop="name"
+        label="姓名"
+        sortable
+        width="180"
       ></el-table-column>
       <el-table-column
-       prop="address"
-       label="地址"
-      :formatter="formatter"
+        prop="address"
+        label="地址"
+        :formatter="formatter"
       ></el-table-column>
       <el-table-column
         label="操作"
@@ -49,8 +63,9 @@
             type="primary"
             icon="el-icon-edit"
             circle
+            @click="goto(property.row.name)"
           >
-            </el-button>
+          </el-button>
           <el-button
             plain
             type="danger"
@@ -204,7 +219,7 @@ export default {
         name: '西门吹雪20',
         address: '蓬莱仙岛',
         ress: ''
-      },{
+      }, {
         date: '2020-8-8',
         name: '西门吹雪21',
         address: '蓬莱仙岛',
@@ -289,6 +304,11 @@ export default {
       console.log("点击成功", id);
       this.userList = this.userList.filter(item => item.name != id)
     },
+    goto(id) {
+      this.$router.push('/user/usAlter');
+      console.log('点击了', id);
+
+    },
 
 
     // 初始页currentPage、初始每页数据数pagesize和数据data
@@ -310,7 +330,7 @@ export default {
       this.dialog = false;
       clearTimeout(this.timer);
     },
-    
+
 
   }
 }
