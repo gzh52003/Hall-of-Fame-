@@ -1,32 +1,21 @@
-/* 入口文件的渲染结构 */
-/* 用编程式导航做单页面 */
+/* 主页面 */
+
 <template>
-  <div id="app">
+  <div id="box">
     <el-container>
       <!-- 头部 -->
       <el-header style="padding:0">
         <el-row style="height:100%">
-          <el-col
-            :span="12"
-            style="height:100%"
-          >
+          <el-col :span="12" style="height:100%">
             <i class="el-icon-s-tools"></i>后台管理系统
           </el-col>
-          <el-col
-            :span="12"
-            style="height:100%"
-          >
-            <el-link
-              type="primary"
-              :underline="false"
-            >注册</el-link>
-            <el-link
-              type="primary"
-              :underline="false"
-            >登录</el-link>
+          <el-col :span="12" style="height:100%">
+            <el-link type="primary" :underline="false">注册</el-link>
+            <el-link type="primary" :underline="false">登录</el-link>
           </el-col>
         </el-row>
       </el-header>
+
       <el-container>
         <!--导航栏 -->
         <el-aside width="200px">
@@ -46,13 +35,9 @@
                 <i :class="item.icon"></i>
                 <span slot="title">{{item.title}}</span>
               </el-menu-item>
+
               <!-- 多层路径 -->
-              <el-submenu
-                :key="item.path"
-                :index="item.path"
-                @click="goto(item.path)"
-                v-else
-              >
+              <el-submenu :key="item.path" :index="item.path" @click="goto(item.path)" v-else>
                 <template v-slot:title>
                   <i :class="item.icon"></i>
                   {{item.title}}
@@ -67,6 +52,7 @@
             </template>
           </el-menu>
         </el-aside>
+
         <!-- 内容区 -->
         <el-main style="padding-top:6px">
           <el-breadcrumb separator-class="el-icon-arrow-right">
@@ -75,7 +61,7 @@
             <el-breadcrumb-item>活动列表</el-breadcrumb-item>
             <el-breadcrumb-item>活动详情</el-breadcrumb-item>
           </el-breadcrumb>
-          <!-- 组件渲染位置 -->
+          <!-- 子组件渲染位置 -->
           <router-view></router-view>
         </el-main>
       </el-container>
@@ -85,18 +71,17 @@
 
 <script>
 export default {
-  name: "App",
   data() {
     return {
       links: [
         {
           title: "首页",
-          path: "/home",
+          path: "/main/home",
           icon: "el-icon-s-home",
         },
         {
           title: "用户管理",
-          path: "/user",
+          path: "/main/user",
           icon: "el-icon-user-solid",
           childList: [
             {
@@ -108,14 +93,14 @@ export default {
               path: "/usAdd",
             },
             {
-              title: "编辑用户",
+              title: "修改用户",
               path: "/usAlter",
-            }
+            },
           ],
         },
         {
           title: "商品管理",
-          path: "/goods",
+          path: "/main/goods",
           icon: "el-icon-box",
           childList: [
             {
@@ -134,7 +119,7 @@ export default {
         },
         {
           title: "订单管理",
-          path: "/order",
+          path: "/main/order",
           icon: "el-icon-s-claim",
           childList: [
             {
@@ -152,7 +137,8 @@ export default {
           ],
         },
       ],
-      activeIndex: "/home",
+      // idx: "/home",
+      activeIndex: "/main/home",
     };
   },
   methods: {
@@ -171,7 +157,7 @@ body {
   margin: 0;
   height: 100%;
 }
-#app {
+#box {
   height: 100%;
 }
 .el-container {
