@@ -9,35 +9,6 @@
     <el-input v-model="formLabelAlign.region" placeholder="修改地址"></el-input>
   </el-col>
  </el-row> -->
- <el-col :span="24" style="margin-left:100px" >
-    <el-button type="primary" @click="submitForm('ruleForm')">提交<el-drawer
-  title="我嵌套了 Form !"
-  :before-close="handleClose"
-  :visible.sync="dialog"
-  direction="ltr"
-  custom-class="demo-drawer"
-  ref="drawer"
-  >
-  <div class="demo-drawer__content">
-    <el-form :model="form">
-      <el-form-item label="活动名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off"></el-input>
-      </el-form-item>
-      <el-form-item label="活动区域" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
-      </el-form-item>
-    </el-form>
-    <div class="demo-drawer__footer">
-      <el-button @click="cancelForm">取 消</el-button>
-      <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
-    </div>
-  </div>
-</el-drawer>
-</el-button>
-  </el-col>
     <el-table
       ref="multipleTable"
       :data="userList.slice((currentPage4-1)*pagesize,currentPage4*pagesize) "
@@ -76,7 +47,35 @@
             type="primary"
             icon="el-icon-edit"
             circle
-          ></el-button>
+          >
+          <el-drawer
+  title="我嵌套了 Form !"
+  :before-close="handleClose"
+  :visible.sync="dialog"
+  direction="ltr"
+  custom-class="demo-drawer"
+  ref="drawer"
+  >
+  <div class="demo-drawer__content">
+    <el-form :model="form">
+      <el-form-item label="活动名称" :label-width="formLabelWidth">
+        <el-input v-model="form.name" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="活动区域" :label-width="formLabelWidth">
+        <el-select v-model="form.region" placeholder="请选择活动区域">
+          <el-option label="区域一" value="shanghai"></el-option>
+          <el-option label="区域二" value="beijing"></el-option>
+        </el-select>
+      </el-form-item>
+    </el-form>
+    <div class="demo-drawer__footer">
+      <el-button @click="cancelForm">取 消</el-button>
+      <el-button type="primary" @click="$refs.drawer.closeDrawer()" :loading="loading">{{ loading ? '提交中 ...' : '确 定' }}</el-button>
+    </div>
+  </div>
+</el-drawer>
+
+          </el-button>
           <el-button
             plain
             type="danger"
@@ -118,7 +117,7 @@
 export default {
   data() {
     return {
-        table: false,
+      table: false,
       dialog: false,
       loading: false,
       userList: [{
@@ -231,7 +230,7 @@ export default {
         ress: ''
       },],
        form: {
-          name: '',
+         name: '',
         region: '',
         date1: '',
         date2: '',
@@ -241,7 +240,7 @@ export default {
         desc: ''
          }, 
          formLabelWidth: '80px',
-      timer: null,
+         timer: null,
          formLabelAlign: {
           region: '',
         },
@@ -251,8 +250,6 @@ export default {
         userListed:[]
     };
   },
-  
-
   components: {},
   created() {
         this.handleSelectionChange()
@@ -284,7 +281,7 @@ export default {
         return;
       }
       this.$confirm('确定要提交表单吗？')
-        .then( _=> {
+        .then(_ => {
           this.loading = true;
           console.log(_);
           this.timer = setTimeout(() => {
@@ -295,17 +292,18 @@ export default {
             }, 400);
           }, 2000);
         })
-        .catch( _=> {
+        .catch(_=> {
             console.log(_);
         });
     },
     cancelForm() {
-      this.loading = false;
-      this.dialog = false;
-      clearTimeout(this.timer);
+    this.loading = false;
+    this.dialog = false;
+    clearTimeout(this.timer);
     }
   }
 }
+
 
 </script>
 <style scoped>
