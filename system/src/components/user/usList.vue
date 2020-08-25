@@ -8,54 +8,37 @@
       @selection-change="handleSelectionChange"
     >
       <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column label="日期" width="120">
-        <template slot-scope="scope">{{ scope.row.date }}</template>
-      </el-table-column>
-      <el-table-column prop="name" label="姓名" width="120"></el-table-column>
-      <el-table-column prop="address" label="地址" show-overflow-tooltip></el-table-column>
+      <el-table-column label="序号" width="120" prop="id"></el-table-column>
+      <el-table-column prop="username" label="用户名" width="120"></el-table-column>
+      <el-table-column prop="age" label="年龄" show-overflow-tooltip></el-table-column>
     </el-table>
   </div>
 </template>
 
 <script>
+import test from "@/api/test";
+
 export default {
   data() {
     return {
-       tableData: [{
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-08',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-06',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-07',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+      tableData: [],
     };
   },
-
   components: {},
 
   methods: {
+    async git() {
+      try {
+        let { data } = await test.getList();
+        this.tableData = data.data;
+        console.log("请求成功", data.data);
+      } catch (error) {
+        console.log("错误为", error);
+      }
+    },
+  },
+  created() {
+    this.git();
   },
 };
 </script>

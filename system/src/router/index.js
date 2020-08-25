@@ -1,22 +1,22 @@
 import Vue from 'vue' //引入vue
-import home from './../components/home' //首页
+import home from '@/components/home' //首页，@代表src目录
 //用户管理
-import user from '../components/user'
-import usList from '../components/user/usList.vue'
-import usAdd from '../components/user/usAdd.vue'
-import usAlter from '../components/user/usAlter.vue'
+import user from '@/components/user'
+import usList from '@/components/user/usList.vue'
+import usAdd from '@/components/user/usAdd.vue'
+import usAlter from '@/components/user/usAlter.vue'
 //商品管理
-import goods from './../components/goods'
-import gdsList from '../components/goods/gdsList'
-import gdsAdd from '../components/goods/gdsAdd'
-import gdsAlter from '../components/goods/gdsAlter'
+import goods from '@/components/goods'
+import gdsList from '@/components/goods/gdsList'
+import gdsAdd from '@/components/goods/gdsAdd'
+import gdsAlter from '@/components/goods/gdsAlter'
 //订单管理
-import order from '../components/order'
-import ordList from '../components/order/ordList'
-import ordAdd from '../components/order/ordAdd'
-import ordAlter from '../components/order/ordAlter'
+import order from '@/components/order'
+import ordList from '@/components/order/ordList'
+import ordAdd from '@/components/order/ordAdd'
+import ordAlter from '@/components/order/ordAlter'
+import notfound from '@/components/notfound.vue' //404页面
 
-import notfound from '../components/notfound.vue'
 //1、引入路由组件
 import VueRouter from 'vue-router'
 
