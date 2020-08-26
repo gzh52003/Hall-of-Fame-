@@ -5,7 +5,9 @@ let URL = 'http://localhost:2003';
 
 //导出请求
 export default {
-  reqLogin(username, password) {  //登录请求
+
+  //登录请求
+  reqLogin(username, password) {
     return request({
       method: 'post',
       data: {
@@ -16,15 +18,27 @@ export default {
     })
   },
 
-  reqToken(token,username,password) { //token请求
+  //token请求
+  reqToken(token, username, password) {
     return request({
       method: 'post',
       data: {
         username,
         password
       },
-      url: URL + '/api/login/'+token
+      url: URL + '/api/login/' + token
     })
-  }
+  },
+
+  //退出登录请求
+  reqOut(Token) {
+    return request({
+      method: 'post',
+      data: {
+        Token
+      },
+      url: URL + '/api/login/loginOut'
+    })
+  },
 
 }

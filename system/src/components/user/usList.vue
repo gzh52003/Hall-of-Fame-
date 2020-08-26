@@ -124,152 +124,6 @@ export default {
       },
       {
         date: '2020-8-8',
-        name: '西门吹雪3',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪4',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪5',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪6',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪7',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪8',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪9',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪10',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪11',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪12',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪13',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪14',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪15',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪16',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪17',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪18',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪19',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪20',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪21',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪22',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪23',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪24',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪25',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪26',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪27',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
-        name: '西门吹雪28',
-        address: '蓬莱仙岛',
-        ress: ''
-      }, {
-        date: '2020-8-8',
-        name: '西门吹雪29',
-        address: '蓬莱仙岛',
-        ress: ''
-      },
-      {
-        date: '2020-8-8',
         name: '西门吹雪30',
         address: '蓬莱仙岛',
         ress: ''
@@ -300,6 +154,7 @@ export default {
     this.handleSelectionChange()
   },
   methods: {
+    formatter(){},
     remove(id) {
       console.log("点击成功", id);
       this.userList = this.userList.filter(item => item.name != id)
@@ -321,9 +176,9 @@ export default {
       console.log(this.currentPage4)  //点击第几页
     },
     handleSelectionChange() {
-      this.$http.get('http://localhost:8080/#/user/usList').then(res => {  //这是从本地请求的数据接口，
+     /*  this.$http.get('http://localhost:8080/#/user/usList').then(res => {  //这是从本地请求的数据接口，
         this.userLists = res.body
-      })
+      }) */
     },
     cancelForm() {
       this.loading = false;

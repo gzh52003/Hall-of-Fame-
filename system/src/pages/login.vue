@@ -110,18 +110,18 @@ export default {
         const p = await Login.reqToken(token, name, pass);
         if (p.data.state) {
           //真正登陆成功
-          //token正确，1、页面跳转，2、存储数据到localstorage
+          //token正确，1、存储数据到localstorage，2、页面跳转，
           this.$message({
             //消息弹框
             showClose: true,
             message: "登录成功！",
             type: "success",
           });
-          //1、跳转，编程式导航
-          this.$router.push("/main");
-          //2、存储用户名和token到本地
+          //1、存储用户名和token到本地
           localStorage.setItem('system-username',name);
-          localStorage.setItem('system-token',token)
+          localStorage.setItem('system-token',token);
+          //2、跳转，编程式导航
+          this.$router.push("/main");
         }
       } catch (error) {
         console.log("错误为：", error);

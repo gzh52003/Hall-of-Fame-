@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
       info = {
         code: 200,
         state: true,
-        token,
+        token,  //将token传给前端
         meg: "登陆成功",
       }
     } else {
@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
       }
     }
     res.send(info)
-    console.log(data);
+    // console.log(data);
   } catch (error) {
     let info = {
       code: error,
@@ -60,7 +60,40 @@ router.post('/' + token, async (req, res) => {
       }
     }
     res.send(info)
-    console.log(data);
+    // console.log(data);
+  } catch (error) {
+    let info = {
+      code: error,
+      state: false,
+      meg: "查询失败"
+    }
+    res.send(info)
+  }
+})
+
+//退出登录
+router.post('/loginOut', async (req, res) => {
+  try {
+    const { Token } = req.body;
+    // const sql = `SELECT * FROM user WHERE username='${username}' and password='${password}'`;
+    // const data = await request(sql);
+    let data = Token == token ? true : false;
+    let info = {};
+    if (data) {
+      info = {
+        code: 200,
+        state: true,
+        meg: "退出成功",
+      }
+    } else {
+      info = {
+        code: 300,
+        state: false,
+        meg: "退出失败"
+      }
+    }
+    res.send(info)
+    // console.log(data);
   } catch (error) {
     let info = {
       code: error,
