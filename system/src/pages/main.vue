@@ -10,8 +10,21 @@
             <i class="el-icon-s-tools"></i>后台管理系统
           </el-col>
           <el-col :span="12" style="height:100%">
-            <el-link type="primary" :underline="false">注册</el-link>
-            <el-link type="primary" :underline="false">登录</el-link>
+            <!-- <el-link type="primary" :underline="false">注册</el-link>
+            <el-link type="primary" :underline="false">登录</el-link>-->
+            <el-link :underline="false">
+              <!-- 下拉菜单 -->
+              <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                  个人中心
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="a" icon="el-icon-s-tools">设置</el-dropdown-item>
+                  <el-dropdown-item command="/login" icon="el-icon-warning">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-link>
           </el-col>
         </el-row>
       </el-header>
@@ -137,14 +150,24 @@ export default {
           ],
         },
       ],
-      // idx: "/home",
       activeIndex: "/main/home",
     };
   },
   methods: {
     goto(data) {
       this.$router.push(data); //编程式导航
-      // this.idx = data;
+    },
+    
+    //退出登录
+    handleCommand(command) {
+      if (command != "a") {
+        this.$message({
+          showClose: true,
+          message: "退出成功！",
+          type: "success",
+        });
+        this.goto(command);
+      }
     },
   },
   components: {},
