@@ -174,14 +174,14 @@ export default {
     async toOut() {
       try {
         //获取token
-        let Token = localStorage.getItem("system-token");
-        const p = await login.reqOut(Token);
+        let token = localStorage.getItem("system-token");
+        const p = await login.reqToken(token); //验证token有效性
         if (p.data.state) {
           //成功:1、清除本地信息
           localStorage.removeItem("system-token");
           localStorage.removeItem("system-username");
           //2、跳转登录页面
-          this.goto('/login');
+          this.goto("/login");
           //退出成功提示弹框
           this.$message({
             showClose: true,

@@ -18,26 +18,14 @@ export default {
     })
   },
 
-  //token请求
-  reqToken(token, username, password) {
+  //token请求:验证token有效性
+  reqToken(token) {
     return request({
       method: 'post',
       data: {
-        username,
-        password
+        token
       },
-      url: URL + '/api/login/' + token
-    })
-  },
-
-  //退出登录请求
-  reqOut(Token) {
-    return request({
-      method: 'post',
-      data: {
-        Token
-      },
-      url: URL + '/api/login/loginOut'
+      url: URL + '/api/login/verify'
     })
   },
 

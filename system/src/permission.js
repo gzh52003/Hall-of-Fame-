@@ -1,9 +1,9 @@
 /* 路由守卫 */
 
 import router from '@/router';  //引入路由
-import Token from '@/api/login';  //引入二次封装的axios请求
+import loginApi from '@/api/login';  //引入二次封装的axios请求
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   /* 
     全局前置路由守卫:
     * to:下个路由
@@ -16,13 +16,25 @@ router.beforeEach((to, from, next) => {
     next(); //括号里不传值，默认允许进入'/login'
   } else {
     //2、判断有无token
-    const token = localStorage.getItem('system-token');
+    const token = localStorage.getItem('system-token'); //获取token
     if (token == null || token == '') {
       //无token，跳到登录页
       next('/login');
     } else {
       //3、有token，发送请求，验证token有效性
-      
+      try {
+        const p = await loginApi.reqToken(token);
+        if(p.data.state){
+          //4、token有效，进入目标路径
+          next();
+        }else{
+          //token无效
+          next('/login');
+        }
+        
+      } catch (error) {
+        console.log('登录验证token错误为：',error)
+      }
     }
   }
 

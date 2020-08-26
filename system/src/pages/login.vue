@@ -26,14 +26,14 @@
 </template>
 
 <script>
-import Login from "@/api/login";
+import Login from "@/api/login"; //引入请求的方法
 
 export default {
   data() {
     return {
       ruleForm: {
         username: "jzb",
-        password: "",
+        password: "123456",
       },
 
       //表单验证
@@ -86,11 +86,7 @@ export default {
         if (p.data.state) {
           //账号密码正确
           //发送token请求
-          this.checkToken(
-            p.data.token,
-            this.ruleForm.username,
-            this.ruleForm.password
-          );
+          this.checkToken(p.data.token);
         } else {
           //提示弹框
           this.$message({
@@ -105,9 +101,10 @@ export default {
     },
 
     //token请求方法
-    async checkToken(token, name, pass) {
+    async checkToken(token) {
       try {
-        const p = await Login.reqToken(token, name, pass);
+        const p = await Login.reqToken(token);
+        console.log('token请求',p.data)
         if (p.data.state) {
           //真正登陆成功
           //token正确，1、存储数据到localstorage，2、页面跳转，
@@ -118,8 +115,8 @@ export default {
             type: "success",
           });
           //1、存储用户名和token到本地
-          localStorage.setItem('system-username',name);
-          localStorage.setItem('system-token',token);
+          localStorage.setItem("system-username",this.ruleForm.username);
+          localStorage.setItem("system-token", token);
           //2、跳转，编程式导航
           this.$router.push("/main");
         }
