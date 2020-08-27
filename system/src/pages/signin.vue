@@ -142,54 +142,6 @@ export default {
         console.log("用户名验证请求出错", error);
       }
     },
-
-    /* async checkLogin() {
-      try {
-        const p = await Login.reqLogin(
-          this.ruleForm.username,
-          this.ruleForm.password
-        );
-        if (p.data.state) {
-          //账号密码正确
-          //发送token请求
-          this.checkToken(p.data.token);
-        } else {
-          //提示弹框
-          this.$message({
-            showClose: true,
-            message: "账号或密码不正确！",
-            type: "error",
-          });
-        }
-      } catch (error) {
-        console.log("错误", error);
-      }
-    }, */
-
-    //token请求方法
-    /*  async checkToken(token) {
-      try {
-        const p = await Login.reqToken(token);
-        console.log('token请求',p.data)
-        if (p.data.state) {
-          //真正登陆成功
-          //token正确，1、存储数据到localstorage，2、页面跳转，
-          this.$message({
-            //消息弹框
-            showClose: true,
-            message: "登录成功！",
-            type: "success",
-          });
-          //1、存储用户名和token到本地
-          localStorage.setItem("system-username",this.ruleForm.username);
-          localStorage.setItem("system-token", token);
-          //2、跳转，编程式导航
-          this.$router.push("/main");
-        }
-      } catch (error) {
-        console.log("错误为：", error);
-      }
-    }, */
   },
 };
 </script>
