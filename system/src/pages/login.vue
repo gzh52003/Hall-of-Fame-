@@ -19,7 +19,11 @@
       </el-form-item>
       <el-form-item>
         <el-button class="but" type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        <el-button type="primary">注册</el-button>
+        <!-- <el-button type="primary" @click="goto">注册</el-button> -->
+        <span style="margin-left:80px">
+          没有账号，点击
+          <a @click="goto" style="cursor:pointer;color:blue;">注册</a>
+        </span>
       </el-form-item>
     </el-form>
   </div>
@@ -32,8 +36,8 @@ export default {
   data() {
     return {
       ruleForm: {
-        username: "jzb",
-        password: "123456",
+        username: "",
+        password: "",
       },
 
       //表单验证
@@ -66,6 +70,10 @@ export default {
   components: {},
 
   methods: {
+    goto(){
+      this.$router.push("/signin");
+    },
+
     submitForm(data) {
       //$refs[data]获取到表单内容，vali为表单验证结果
       this.$refs[data].validate((vali) => {
