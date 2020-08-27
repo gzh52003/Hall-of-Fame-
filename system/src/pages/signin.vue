@@ -12,7 +12,7 @@
     >
       <h2>欢迎注册</h2>
       <el-form-item label="用户名" prop="username">
-        <el-input type="text" v-model="ruleForm.username"></el-input>
+        <el-input type="text" v-model="ruleForm.username" @blur="goblur"></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
         <el-input type="password" v-model="ruleForm.password"></el-input>
@@ -29,7 +29,7 @@
 </template>
 
 <script>
-import Login from "@/api/login"; //引入请求的方法
+import Signin from "@/api/signin"; //引入注册的请求方法
 
 export default {
   data() {
@@ -43,7 +43,7 @@ export default {
       rules: {
         //用户名验证
         username: [
-          //required是否必填，trigger校验触发条件,blur:失去焦点，change:内容改变
+          //required是否必填，trigger校验触发条件-> blur:失去焦点，change:内容改变
           { required: true, message: "请输入用户名", trigger: "blur" },
           {
             min: 2,
@@ -63,6 +63,7 @@ export default {
           },
         ],
       },
+      sign: "", //用户名校验标记
     };
   },
 
@@ -70,20 +71,78 @@ export default {
 
   methods: {
     goto() {
-      this.$router.push("/login");
+      this.$router.replace("/login");
+    },
+
+    //功能：用户框失去焦点，触发验证
+    goblur() {
+      //用户名格式正确，发送验证请求
+      if (
+        this.ruleForm.username &&
+        this.ruleForm.username.length < 17 &&
+        this.ruleForm.username.length > 1
+      ) {
+        this.checkUsername(this.ruleForm.username);
+      }
     },
 
     submitForm(data) {
+      //任一输入框为空时弹框提醒
+      if (!(this.ruleForm.username != "" && this.ruleForm.password != "")) {
+        this.$message({
+          showClose: true,
+          message: "账号或密码不能为空！",
+          type: "error",
+        });
+      }
+
       //$refs[data]获取到表单内容，vali为表单验证结果
-      this.$refs[data].validate((vali) => {
+      this.$refs[data].validate(async (vali) => {
         if (vali) {
-          //验证通过，发送登录请求
-          // this.checkLogin();
+          //表单验证通过
+          if (this.sign) {
+            //标签sign为true，允许发送请求
+            const p = await Signin.reqSignin(
+              this.ruleForm.username,
+              this.ruleForm.password
+            );
+            if (p.data.state) {
+              //注册成功，跳到登录页
+              this.$message.success("注册成功！");
+              this.$router.replace("/login");
+            } else {
+              //注册失败
+              this.$message.error("注册失败！");
+            }
+          } else {
+            //标签sign为false，提示用户名重复，不能注册
+            this.$message.error("用户名重复！");
+          }
         }
       });
     },
 
-    //登录请求方法
+    //功能：验证用户名是否存在
+    async checkUsername(username) {
+      try {
+        const p = await Signin.reqUsername(username);
+        if (p.data.state) {
+          //用户名存在，提示不能注册
+          this.$notify({
+            title: "提示",
+            message: "这个名字太受欢迎啦，换一个吧！",
+            type: "warning",
+          });
+          this.sign = false; //标记为false
+        } else {
+          //用户名不存在，可以注册
+          this.sign = true;
+        }
+      } catch (error) {
+        console.log("用户名验证请求出错", error);
+      }
+    },
+
     /* async checkLogin() {
       try {
         const p = await Login.reqLogin(

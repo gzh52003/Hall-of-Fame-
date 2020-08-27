@@ -1,7 +1,6 @@
-/* 登录的axios请求 */
+/* 登录页请求 */
 
 import request from '@/tool/axios'; //引入封装的axios请求
-let URL = 'http://localhost:2003';
 
 //导出请求
 export default {
@@ -14,7 +13,7 @@ export default {
         username,
         password
       },
-      url: URL + '/api/login' //请求接口地址
+      url:'/login' //请求接口地址
     })
   },
 
@@ -25,7 +24,7 @@ export default {
       data: {
         token
       },
-      url: URL + '/api/login/verify'
+      url:'/login/verify'
     })
   },
 
