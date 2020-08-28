@@ -3,7 +3,7 @@
 import request from '@/tool/axios' //导入封装的axios请求
 
 //导出请求方法
-export default {  
+/* export default {  
   getList() {     //请求用户数据
     return request({
       method: 'get',     //请求方式
@@ -13,4 +13,4 @@ export default {
   getId(){
 
   }
-}
+} */

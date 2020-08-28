@@ -71,7 +71,10 @@ export default {
 
   components: {},
 
-  methods: {}
+  methods: {},
+  created(){
+    console.log('获取到：',this.$route.params)
+  }
 }
 </script>
 

@@ -21,7 +21,7 @@
         <el-button class="but" type="primary" @click="submitForm('ruleForm')">注册</el-button>
         <span style="margin-left:80px">
           已有账号，点击
-          <a @click="goto" style="cursor:pointer;color:blue;">登录</a>
+          <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">登录</a>
         </span>
       </el-form-item>
     </el-form>

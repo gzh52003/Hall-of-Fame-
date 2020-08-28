@@ -22,7 +22,7 @@
         <!-- <el-button type="primary" @click="goto">注册</el-button> -->
         <span style="margin-left:80px">
           没有账号，点击
-          <a @click="goto" style="cursor:pointer;color:blue;">注册</a>
+          <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">注册</a>
         </span>
       </el-form-item>
     </el-form>
