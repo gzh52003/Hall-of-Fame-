@@ -310,9 +310,9 @@ export default {
 
     },
 
-
+formatter(){},
     // 初始页currentPage、初始每页数据数pagesize和数据data
-    handleSizeChange: function (size) {
+    handleSizeChange:function (size) {
       this.pagesize = size;
       console.log(this.pagesize)  //每页下拉显示数据
     },
@@ -321,9 +321,9 @@ export default {
       console.log(this.currentPage4)  //点击第几页
     },
     handleSelectionChange() {
-      this.$http.get('http://localhost:8080/#/user/usList').then(res => {  //这是从本地请求的数据接口，
-        this.userLists = res.body
-      })
+      // this.$http.get('http://localhost:8080/#/user/usList').then(res => {  //这是从本地请求的数据接口，
+      //   this.userLists = res.body
+      // })
     },
     cancelForm() {
       this.loading = false;
