@@ -10,8 +10,20 @@
             <i class="el-icon-s-tools"></i>后台管理系统
           </el-col>
           <el-col :span="12" style="height:100%">
-            <el-link type="primary" :underline="false">注册</el-link>
-            <el-link type="primary" :underline="false">登录</el-link>
+
+            <el-link :underline="false">
+              <!-- 下拉菜单 -->
+              <el-dropdown @command="handleCommand">
+                <span class="el-dropdown-link">
+                  {{name ? '欢迎 '+ name : '请登录' }}
+                  <i class="el-icon-arrow-down el-icon--right"></i>
+                </span>
+                <el-dropdown-menu slot="dropdown">
+                  <el-dropdown-item command="a" icon="el-icon-s-tools">设置</el-dropdown-item>
+                  <el-dropdown-item command="b" icon="el-icon-warning">退出</el-dropdown-item>
+                </el-dropdown-menu>
+              </el-dropdown>
+            </el-link>
           </el-col>
         </el-row>
       </el-header>
@@ -70,6 +82,8 @@
 </template>
 
 <script>
+import login from "@/api/login";
+
 export default {
   data() {
     return {
@@ -137,14 +151,53 @@ export default {
           ],
         },
       ],
-      // idx: "/home",
       activeIndex: "/main/home",
+      name: localStorage.getItem("system-username"),
     };
   },
   methods: {
+    //功能：页面跳转
     goto(data) {
       this.$router.push(data); //编程式导航
-      // this.idx = data;
+    },
+
+    //功能：点击触发退出登录
+    handleCommand(command) {
+      if (command != "a") {
+        //调用退出登录方法
+        this.toOut();
+      }
+    },
+
+    //功能：退出登录方法
+    async toOut() {
+      try {
+        //获取token
+        let token = localStorage.getItem("system-token");
+        const p = await login.reqToken(token); //验证token有效性
+        if (p.data.state) {
+          //成功:1、清除本地信息
+          localStorage.removeItem("system-token");
+          localStorage.removeItem("system-username");
+          //2、跳转登录页面
+          this.goto("/login");
+          //退出成功提示弹框
+          this.$message({
+            showClose: true,
+            message: "退出成功！",
+            type: "success",
+          });
+        } else {
+          //退出失败弹框
+          this.$message({
+            showClose: true,
+            message: "退出失败",
+            type: "error",
+          });
+        }
+      } catch (error) {
+        console.log("退出错误为：", error);
+      }
     },
   },
   components: {},
