@@ -2,10 +2,10 @@
   <div>
     <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px">
       <el-col :span="6">
-        <el-input v-model="formLabelAlign.region" placeholder="通过ID查询"></el-input>
+        <el-input v-model.trim="search" placeholder="通过用户名查询" style="width:200px"></el-input>
       </el-col>
       <el-col :span="6" style="margin-left:10px">
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="Search">搜索</el-button>
       </el-col>
     </el-row>
     <el-table
@@ -24,15 +24,25 @@
       <el-table-column label="操作" show-overflow-tooltip width="200">
         <template v-slot:default="property">
           <!-- 修改按钮 -->
-          <el-button plain type="primary" icon="el-icon-edit" circle @click="goto(property.row.id)"></el-button>
-          <!-- 删除按钮 -->
           <el-button
             plain
-            type="danger"
-            icon="el-icon-delete"
+            type="primary"
+            icon="el-icon-edit"
             circle
-            @click="remove(property.row.name)"
+            @click="goto(property.row.id)"
+            style="margin-right:14px"
           ></el-button>
+          <!-- 删除按钮 -->
+          <el-popconfirm
+            title="确定删除吗？"
+            @onConfirm="remove(property.row.id)"
+            icon="el-icon-info"
+            iconColor="red"
+            confirmButtonType="danger"
+            cancelButtonType="primary"
+          >
+            <el-button slot="reference" icon="el-icon-delete" plain type="danger" circle></el-button>
+          </el-popconfirm>
         </template>
       </el-table-column>
     </el-table>
@@ -45,7 +55,6 @@
         :current-page="currentPage4"
         :page-sizes="[10,20,30,40,50]"
         :page-size="pagesize"
-        layout="total, sizes,prev, pager, next, jumper"
         :total="userList.length"
         :hide-on-single-page="value"
       ></el-pagination>
@@ -59,53 +68,99 @@ import apiUser from "@/api/user"; //引入二次封装请求
 export default {
   data() {
     return {
-      table: false,
-      dialog: false,
-      loading: false,
-      input: "",
       userList: [], //列表数据
-      form: {
-        name: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: "",
-      },
-      formLabelWidth: "80px",
-      timer: null,
-      formLabelAlign: {
-        region: "",
-      },
+      search: "", //搜索框数据
+      Lists: [], //备份数据，用于搜索框无数据时显示数据
       value: false,
       currentPage4: 1, //初始页
       pagesize: 10, //每页的数据
-      userListed: [],
     };
   },
   components: {},
-  async created() {
-    try {
-      //发送请求，请求所有用户
-      const p = await apiUser.reqUser();
-      this.userList = p.data.data;
-    } catch (error) {
-      console.log("请求用户名出错", error);
-    }
+  created() {
+    //一进页面，请求所有用户数据
+    this.checkUser();
   },
 
   methods: {
-    /*  remove(id) {
-      console.log("点击成功", id);
-      // this.userList = this.userList.filter((item) => item.name != id);
-    }, */
+    //功能：请求所有用户数据并响应到页面
+    async checkUser() {
+      try {
+        //发送请求，请求所有用户
+        const p = await apiUser.reqUser();
+        if (p.data.state) {
+          //有数据
+          this.userList = p.data.data;
+        } else {
+          //无数据
+          console.log("查询所有用户失败");
+        }
+      } catch (error) {
+        console.log("请求用户名出错", error);
+      }
+    },
 
     //功能：修改按钮点击触发页面跳转
     goto(id) {
-      // console.log("点击了修改按钮", id);
-      this.$router.replace("/main/user/usAlter");
+      this.$router.replace("/main/user/usAlter" + id);
+    },
+
+    //功能；点击删除按钮触发删除事件
+    async remove(id) {
+      this.userList = this.userList.filter((item) => item.id != id);
+      try {
+        //发送删除用户请求
+        const p = await apiUser.reqUserDelete(id);
+        if (p.data.state) {
+          //删除成功，弹框提示
+          this.$message({
+            showClose: true,
+            message: "删除成功！",
+            type: "success",
+          });
+        } else {
+          //删除失败
+          this.$message({
+            showClose: true,
+            message: "删除失败！",
+            type: "error",
+          });
+        }
+      } catch (error) {
+        console.log("删除用户请求失败", error);
+      }
+    },
+
+    //功能：点击搜索按钮，发送用户名请求
+    async Search() {
+      if (this.search == "") {
+        //没有输入，弹出提示框
+        this.$message({
+          showClose: true,
+          message: "请输入查询信息！",
+          type: "warning",
+        });
+      } else {
+        try {
+          // 有输入，发送用户名验证请求
+          const p = await apiUser.reqUsername(this.search);
+          if (p.data.state) {
+            //用户名存在，显示信息
+            this.userList = p.data.data;
+            this.search = ""; //清空输入框
+          } else {
+            //用户名不存在，提示弹框，显示备份数据
+            this.$message({
+              showClose: true,
+              message: "无此用户！",
+              type: "warning",
+            });
+            this.checkUser();
+          }
+        } catch (error) {
+          console.log("用户名验证请求失败", error);
+        }
+      }
     },
 
     // 初始页currentPage、初始每页数据数pagesize和数据data
@@ -116,11 +171,6 @@ export default {
     handleCurrentChange: function (currentPage4) {
       this.currentPage4 = currentPage4;
       console.log(this.currentPage4); //点击第几页
-    },
-    cancelForm() {
-      this.loading = false;
-      this.dialog = false;
-      clearTimeout(this.timer);
     },
     handleSelectionChange() {},
     formatter() {},
