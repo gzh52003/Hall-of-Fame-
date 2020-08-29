@@ -85,7 +85,7 @@ const router = new VueRouter({
             },
             {
               //修改用户
-              path: 'usAlter',
+              path: 'usAlter:id',
               component: usAlter
             }
           ]

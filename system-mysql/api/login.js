@@ -3,7 +3,6 @@ const router = Router();  //启动路由
 
 const request = require('../mysql');  //引入数据库方法
 const { encrypt, decode } = require('./token');  //引入操作token的方法
-// const token = 'admins';
 
 //登录验证
 router.post('/', async (req, res) => {
@@ -59,6 +58,69 @@ router.post('/verify', (req, res) => {
     }
   }
   res.send(info)
+})
+
+//用户名验证
+/* router.get('/:username', async (req, res) => {
+  let info;
+  try {
+    const { username } = req.params;
+    const sql = `SELECT * from user WHERE username='${username}'`;
+    const data = await request(sql);
+    if (data.length) {
+      info = {
+        code: 200,
+        state: true,
+        meg: '验证成功'
+      }
+    } else {
+      info = {
+        code: 300,
+        state: false,
+        meg: '验证失败'
+      }
+    }
+    res.send(info);
+  } catch (error) {
+    info = {
+      code: error,
+      state: false,
+      meg: '请求失败'
+    }
+    res.send(info);
+  }
+}) */
+
+//用户名验证，响应数据不带password
+router.get('/:username', async (req, res) => {
+  let info;
+  try {
+    const { username } = req.params;
+    const sql = `SELECT id, username,gender,age from user WHERE username='${username}'`;
+    const data = await request(sql);
+    if (data.length) {
+      info = {
+        code: 200,
+        state: true,
+        data,
+        meg: '验证成功'
+      }
+    } else {
+      info = {
+        code: 300,
+        state: false,
+        meg: '验证失败'
+      }
+    }
+    res.send(info);
+  } catch (error) {
+    info = {
+      code: error,
+      state: false,
+      meg: '请求失败'
+    }
+    res.send(info);
+  }
 })
 
 module.exports = router;

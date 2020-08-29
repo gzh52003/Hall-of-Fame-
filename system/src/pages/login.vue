@@ -94,25 +94,45 @@ export default {
 
     //登录请求方法
     async checkLogin() {
+      //验证用户名是否存在
+      this.checkUsername(this.ruleForm.username);
+    },
+
+    //功能：验证用户名是否存在
+    async checkUsername(username) {
       try {
-        const p = await Login.reqLogin(
-          this.ruleForm.username,
-          this.ruleForm.password
-        );
-        if (p.data.state) {
-          //账号密码正确
-          //发送token请求
-          this.checkToken(p.data.token);
+        const p = await Login.reqUsername(username);
+        if (!p.data.state) {
+          //用户名不存在，提示去注册
+          this.$message.warning({
+          showClose: true,
+          message: '用户名不存在，请注册',
+        });
         } else {
-          //提示弹框
-          this.$message({
-            showClose: true,
-            message: "账号或密码不正确！",
-            type: "error",
-          });
+          //用户名存在，正常登录
+          try {
+            const p = await Login.reqLogin(
+              this.ruleForm.username,
+              this.ruleForm.password
+            );
+            if (p.data.state) {
+              //账号密码正确
+              //发送token请求
+              this.checkToken(p.data.token);
+            } else {
+              //提示弹框
+              this.$message({
+                showClose: true,
+                message: "账号或密码不正确！",
+                type: "error",
+              });
+            }
+          } catch (error) {
+            console.log("错误", error);
+          }
         }
       } catch (error) {
-        console.log("错误", error);
+        console.log("验证用户名请求失败", error);
       }
     },
 
@@ -120,7 +140,7 @@ export default {
     async checkToken(token) {
       try {
         const p = await Login.reqToken(token);
-        console.log("token请求", p.data);
+        // console.log("token请求", p.data);
         if (p.data.state) {
           //真正登陆成功
           //token正确，1、存储数据到localstorage，2、页面跳转，

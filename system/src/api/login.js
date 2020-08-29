@@ -13,7 +13,7 @@ export default {
         username,
         password
       },
-      url:'/login' //请求接口地址
+      url: '/login' //请求接口地址
     })
   },
 
@@ -24,8 +24,16 @@ export default {
       data: {
         token
       },
-      url:'/login/verify'
+      url: '/login/verify'
     })
   },
+
+  //用户名验证请求
+  reqUsername(username) {
+    return request({
+      method: 'get',
+      url: '/login/' + username
+    })
+  }
 
 }
