@@ -1,11 +1,27 @@
 <template>
   <div>
-    <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px">
+    <el-row
+      :gutter="100"
+      type="flex"
+      justify="left"
+      style="margin:30px 0px"
+    >
       <el-col :span="6">
-        <el-input v-model.trim="search" placeholder="通过用户名查询" style="width:200px"></el-input>
+        <el-input
+          v-model.trim="search"
+          placeholder="通过用户名查询"
+          style="width:200px"
+        ></el-input>
       </el-col>
-      <el-col :span="6" style="margin-left:10px">
-        <el-button type="primary" icon="el-icon-search" @click="Search">搜索</el-button>
+      <el-col
+        :span="6"
+        style="margin-left:10px"
+      >
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="Search"
+        >搜索</el-button>
       </el-col>
     </el-row>
     <el-table
@@ -16,12 +32,37 @@
       @selection-change="handleSelectionChange"
       :default-sort="{prop: 'date', order: 'descending'}"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="序号" sortable width="120"></el-table-column>
-      <el-table-column prop="username" label="用户名" min-width="120"></el-table-column>
-      <el-table-column prop="gender" label="性别" min-width="120"></el-table-column>
-      <el-table-column prop="age" label="年龄" sortable min-width="120"></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width="200">
+      <el-table-column
+        type="selection"
+        width="55"
+      ></el-table-column>
+      <el-table-column
+        prop="id"
+        label="序号"
+        sortable
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="username"
+        label="用户名"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="gender"
+        label="性别"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="age"
+        label="年龄"
+        sortable
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        label="操作"
+        show-overflow-tooltip
+        width="200"
+      >
         <template v-slot:default="property">
           <!-- 修改按钮 -->
           <el-button
@@ -41,7 +82,13 @@
             confirmButtonType="danger"
             cancelButtonType="primary"
           >
-            <el-button slot="reference" icon="el-icon-delete" plain type="danger" circle></el-button>
+            <el-button
+              slot="reference"
+              icon="el-icon-delete"
+              plain
+              type="danger"
+              circle
+            ></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -55,6 +102,7 @@
         :current-page="currentPage4"
         :page-sizes="[10,20,30,40,50]"
         :page-size="pagesize"
+        layout="total, sizes,prev, pager, next, jumper" 
         :total="userList.length"
         :hide-on-single-page="value"
       ></el-pagination>
@@ -171,8 +219,8 @@ export default {
       this.currentPage4 = currentPage4;
       console.log(this.currentPage4); //点击第几页
     },
-    handleSelectionChange() {},
-    formatter() {},
+    handleSelectionChange() { },
+    formatter() { },
   },
 };
 </script>
