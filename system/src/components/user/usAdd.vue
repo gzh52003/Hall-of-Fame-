@@ -5,28 +5,28 @@
  class="demo-ruleForm"
  style="width:300px; 
  margin:auto;
- background:#ccc;
- padding:20px 100px;
+ background:#fff;
+ padding:40px 100px;
  border-radius:10px;
  "
  >
-   <el-form-item label="用户" prop="username">
+   <el-form-item label="用户名：" prop="username">
     <el-input type="text" v-bind:value="ruleForm.username" ></el-input>
   </el-form-item>
-  <el-form-item label="密码" prop="pass">
+  <!-- <el-form-item label="密码" prop="pass">
     <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
   </el-form-item>
   <el-form-item label="确认密码" prop="checkPass">
     <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-  </el-form-item>
-  <el-form-item label="性别" prop="gender">
+  </el-form-item> -->
+  <el-form-item label="性别：" prop="gender">
     <el-select v-model.number="ruleForm.gender" style="width:100px" >
       <el-option lable="男" value="男"></el-option>
       <el-option lable="女" value="女"></el-option>
       <el-option lable="保密" value="保密"></el-option>
     </el-select>
   </el-form-item>
-  <el-form-item label="年龄" prop="age">
+  <el-form-item label="年龄:" prop="age">
     <el-input v-model.number="ruleForm.age"></el-input>
   </el-form-item>
   <el-form-item   style="margin:auto;">
@@ -55,25 +55,6 @@
           }
         }, 1000);
       };
-      var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请再次输入密码'));
-        } else if (value !== this.ruleForm.pass) {
-          callback(new Error('两次输入密码不一致!'));
-        } else {
-          callback();
-        }
-      };
       return {
         ruleForm: {
           pass: '',
@@ -83,12 +64,6 @@
           username:''
         },
         rules: {
-          pass: [
-            { validator: validatePass, trigger: 'blur' }
-          ],
-          checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
           age: [
             { validator: checkAge, trigger: 'blur' }
           ]

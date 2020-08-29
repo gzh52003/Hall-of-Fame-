@@ -1,11 +1,25 @@
 <template>
   <div>
-    <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px">
+    <el-row
+      :gutter="100"
+      type="flex"
+      justify="left"
+      style="margin:30px 0px"
+    >
       <el-col :span="6">
-        <el-input v-model="formLabelAlign.region" placeholder="通过ID查询"></el-input>
+        <el-input
+          v-model="formLabelAlign.region"
+          placeholder="通过ID查询"
+        ></el-input>
       </el-col>
-      <el-col :span="6" style="margin-left:10px">
-        <el-button type="primary" icon="el-icon-search">搜索</el-button>
+      <el-col
+        :span="6"
+        style="margin-left:10px"
+      >
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+        >搜索</el-button>
       </el-col>
     </el-row>
     <el-table
@@ -16,15 +30,46 @@
       @selection-change="handleSelectionChange"
       :default-sort="{prop: 'date', order: 'descending'}"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column prop="id" label="序号" sortable width="120"></el-table-column>
-      <el-table-column prop="username" label="用户名" min-width="120"></el-table-column>
-      <el-table-column prop="gender" label="性别" min-width="120"></el-table-column>
-      <el-table-column prop="age" label="年龄" sortable min-width="120"></el-table-column>
-      <el-table-column label="操作" show-overflow-tooltip width="200">
+      <el-table-column
+        type="selection"
+        width="55"
+      ></el-table-column>
+      <el-table-column
+        prop="id"
+        label="序号"
+        sortable
+        width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="username"
+        label="用户名"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="gender"
+        label="性别"
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        prop="age"
+        label="年龄"
+        sortable
+        min-width="120"
+      ></el-table-column>
+      <el-table-column
+        label="操作"
+        show-overflow-tooltip
+        width="200"
+      >
         <template v-slot:default="property">
           <!-- 修改按钮 -->
-          <el-button plain type="primary" icon="el-icon-edit" circle @click="goto(property.row.id)"></el-button>
+          <el-button
+            plain
+            type="primary"
+            icon="el-icon-edit"
+            circle
+            @click="goto(property.row.id)"
+          ></el-button>
           <!-- 删除按钮 -->
           <el-button
             plain
@@ -55,7 +100,6 @@
 
 <script>
 import apiUser from "@/api/user"; //引入二次封装请求
-
 export default {
   data() {
     return {
@@ -63,7 +107,7 @@ export default {
       dialog: false,
       loading: false,
       input: "",
-      userList: [], //列表数据
+      userList: [], //列表数据l
       form: {
         name: "",
         region: "",
@@ -97,10 +141,10 @@ export default {
   },
 
   methods: {
-    /*  remove(id) {
+    remove(id) {
       console.log("点击成功", id);
-      // this.userList = this.userList.filter((item) => item.name != id);
-    }, */
+      this.userList = this.userList.filter((item) => item.name != id);
+    },
 
     //功能：修改按钮点击触发页面跳转
     goto(id) {
@@ -109,7 +153,7 @@ export default {
     },
 
     // 初始页currentPage、初始每页数据数pagesize和数据data
-    handleSizeChange:function (size) {
+    handleSizeChange: function (size) {
       this.pagesize = size;
       console.log(this.pagesize); //每页下拉显示数据
     },
@@ -122,8 +166,8 @@ export default {
       this.dialog = false;
       clearTimeout(this.timer);
     },
-    handleSelectionChange() {},
-    formatter() {},
+    handleSelectionChange() { },
+    formatter() { },
   },
 };
 </script>

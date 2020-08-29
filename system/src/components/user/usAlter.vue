@@ -1,82 +1,117 @@
 <template>
-  <div
-    class="block;"
+  <el-form
+    :model="ruleForm"
+    status-icon
+    :rules="rules"
+    ref="ruleForm"
+    class="demo-ruleForm"
+    style="width:300px; 
+ margin:auto;
+ background:#fff;
+ padding:40px 100px;
+ border-radius:10px;
+ "
   >
-    <el-row  style="margin:30px">
-      <el-col :span="12">
-        <el-date-picker
-          v-model="value2"
-          align="right"
-          type="date"
-          placeholder="选择修改日期"
-          :picker-options="pickerOptions"
-        >
-        </el-date-picker>
-      </el-col>
-    </el-row>
-    <el-row  style="margin:30px">
-     <el-col :span="12">
-        <el-input
-          v-model="input"
-          placeholder="请输入修改地址"
-          clearable
-          style="width:300px"
-        ></el-input>
-      </el-col>
-       </el-row>
-    <el-col :span="12"  style="margin:30px">
-        <el-button
-          type="primary"
-          @click="submitForm('ruleForm')"
-        >提交</el-button>
-      </el-col>
-  </div>
+    <el-form-item
+      label="用户名："
+      prop="username"
+    >
+      <el-input
+        type="text"
+        v-bind:value="ruleForm.username"
+      ></el-input>
+    </el-form-item>
+    <!-- <el-form-item label="密码" prop="pass">
+    <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
+  </el-form-item>
+  <el-form-item label="确认密码" prop="checkPass">
+    <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
+  </el-form-item> -->
+    <el-form-item
+      label="性别："
+      prop="gender"
+    >
+      <el-select
+        v-model.number="ruleForm.gender"
+        style="width:100px"
+      >
+        <el-option
+          lable="男"
+          value="男"
+        ></el-option>
+        <el-option
+          lable="女"
+          value="女"
+        ></el-option>
+        <el-option
+          lable="保密"
+          value="保密"
+        ></el-option>
+      </el-select>
+    </el-form-item>
+    <el-form-item
+      label="年龄:"
+      prop="age"
+    >
+      <el-input v-model.number="ruleForm.age"></el-input>
+    </el-form-item>
+    <el-form-item style="margin:auto;">
+      <el-button
+        type="primary"
+        @click="submitForm('ruleForm')"
+      >提交</el-button>
+      <el-button @click="resetForm('ruleForm')">重置</el-button>
+    </el-form-item>
+  </el-form>
 </template>
-
 <script>
 export default {
   data() {
+    var checkAge = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('年龄不能为空'));
+      }
+      setTimeout(() => {
+        if (!Number.isInteger(value)) {
+          callback(new Error('请输入数字值'));
+        } else {
+          if (value < 18) {
+            callback(new Error('必须年满18岁'));
+          } else {
+            callback();
+          }
+        }
+      }, 1000);
+    };
     return {
-      input: "",
-      pickerOptions: {
-        disabledDate(time) {
-          return time.getTime() > Date.now();
-        },
-        shortcuts: [{
-          text: '今天',
-          onClick(picker) {
-            picker.$emit('pick', new Date());
-          }
-        }, {
-          text: '昨天',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24);
-            picker.$emit('pick', date);
-          }
-        }, {
-          text: '一周前',
-          onClick(picker) {
-            const date = new Date();
-            date.setTime(date.getTime() - 3600 * 1000 * 24 * 7);
-            picker.$emit('pick', date);
-          }
-        }]
+      ruleForm: {
+        pass: '',
+        checkPass: '',
+        age: '',
+        gender: "男",
+        username: ''
       },
-      value1: '',
-      value2: '',
-
-    }
+      rules: {
+        age: [
+          { validator: checkAge, trigger: 'blur' }
+        ]
+      }
+    };
   },
-
-  components: {},
-
-  methods: {},
-  created(){
-    console.log('获取到：',this.$route.params)
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
   }
 }
 </script>
-
-<style scoped>
-</style>
