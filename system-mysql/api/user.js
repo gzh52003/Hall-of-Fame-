@@ -37,11 +37,11 @@ router.get('/', async (req, res) => {
   }
 })
 
-//查询单条
+//查询单条，data没有password,id
 router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const sql = `select * from user where id='${id}'`;
+    const sql = `select username,gender,age from user where id='${id}'`;
     let data = await request(sql);
     let info = {};
     if (data.length) {
@@ -73,7 +73,7 @@ router.get('/:id', async (req, res) => {
 //username必传
 router.post('/', async (req, res) => {
   try {
-    const { username, gender = (''), age = (null), password = ('') } = req.body;
+    const { username, gender = (''), age = (null), password } = req.body;
     const sql = `insert into user (username,gender,age,password) values ('${username}','${gender}',${age},'${password}')`;
     const data = await request(sql);
     let info = {};
@@ -135,11 +135,10 @@ router.delete('/:id', async (req, res) => {
 })
 
 //修改用户
-//所有参数都要传
 router.put('/', async (req, res) => {
   try {
-    const { id, username, gender, age, password } = req.body
-    const sql = `UPDATE user SET username = '${username}',gender='${gender}',age = ${age},password='${password}' WHERE id = ${id}`
+    const { id, gender, age } = req.body
+    const sql = `UPDATE user SET gender='${gender}',age = ${age} WHERE id = ${id}`
     const data = await request(sql);
     let info = {};
     if (data.changedRows) {
