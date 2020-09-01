@@ -12,6 +12,14 @@ export default {
     })
   },
 
+  //根据id查询用户
+  reqUserOdd(id) {
+    return request({
+      method: 'get',
+      url: '/user/' + id
+    })
+  },
+
   //删除用户
   reqUserDelete(id) {
     return request({
@@ -26,5 +34,36 @@ export default {
       method: 'get',
       url: '/login/' + username
     })
+  },
+
+  //修改用户
+  reqAlterUser(id, gender, age) {
+    return request({
+      method: 'put',
+      data: {
+        id,
+        gender,
+        age
+      },
+      url: '/user'
+    })
+  },
+
+  //添加用户
+  reqAdd(username, password, gender, age) {
+    if (age == '') {
+      age = null
+    };
+    return request({
+      method: 'post',
+      data: {
+        username,
+        gender,
+        age,
+        password
+      },
+      url: '/user'
+    })
   }
+
 }

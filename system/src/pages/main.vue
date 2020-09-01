@@ -10,13 +10,15 @@
             <i class="el-icon-s-tools"></i>后台管理系统
           </el-col>
           <el-col :span="12" style="height:100%">
-
             <el-link :underline="false">
               <!-- 下拉菜单 -->
               <el-dropdown @command="handleCommand">
                 <span class="el-dropdown-link">
-                  {{name ? '欢迎 '+ name : '请登录' }}
-                  <i class="el-icon-arrow-down el-icon--right"></i>
+                  <a class="welcome">欢迎</a>
+                  {{name ? name : '请登录' }}
+                  <i
+                    class="el-icon-arrow-down el-icon--right"
+                  ></i>
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="a" icon="el-icon-s-tools">设置</el-dropdown-item>
@@ -32,6 +34,7 @@
         <!--导航栏 -->
         <el-aside width="200px">
           <el-menu
+            unique-opened
             active-text-color="red"
             :default-active="activeIndex"
             style="background-color:rgb(211,220,230)"
@@ -106,10 +109,10 @@ export default {
               title: "添加用户",
               path: "/usAdd",
             },
-            {
+            /*  {
               title: "修改用户",
               path: "/usAlterid",
-            },
+            }, */
           ],
         },
         {
@@ -251,13 +254,19 @@ body {
 .el-main {
   background-color: #e9eef3;
   color: #333;
-  // text-align: center;
-  // line-height: 160px;
   .el-breadcrumb {
     height: 40px;
     line-height: 40px;
     border-bottom: 1px solid green;
     margin-bottom: 8px;
+  }
+}
+.el-dropdown-link {
+  color: rgb(254,240,240);
+  font-size: 16px;
+  .welcome {
+    color: rgb(64,158,255);
+    font-size: 15px;
   }
 }
 </style>

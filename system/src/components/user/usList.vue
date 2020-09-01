@@ -1,27 +1,15 @@
 <template>
-  <div>
-    <el-row
-      :gutter="100"
-      type="flex"
-      justify="left"
-      style="margin:30px 0px"
-    >
-      <el-col :span="6">
+  <div style="height:90%">
+    <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px;">
+      <el-col>
+        <el-button type="success" icon="el-icon-back" plain circle v-if="sign" @click="goBack"></el-button>
         <el-input
           v-model.trim="search"
           placeholder="通过用户名查询"
-          style="width:200px"
+          clearable
+          style="width:200px;margin:0 10px"
         ></el-input>
-      </el-col>
-      <el-col
-        :span="6"
-        style="margin-left:10px"
-      >
-        <el-button
-          type="primary"
-          icon="el-icon-search"
-          @click="Search"
-        >搜索</el-button>
+        <el-button type="primary" icon="el-icon-search" @click="Search">搜索</el-button>
       </el-col>
     </el-row>
     <el-table
@@ -78,6 +66,7 @@
             title="确定删除吗？"
             @onConfirm="remove(property.row.id)"
             icon="el-icon-info"
+            
             iconColor="red"
             confirmButtonType="danger"
             cancelButtonType="primary"
@@ -117,7 +106,7 @@ export default {
     return {
       userList: [], //列表数据
       search: "", //搜索框数据
-      Lists: [], //备份数据，用于搜索框无数据时显示数据
+      sign: "",   //返回按钮标识
       value: false,
       currentPage4: 1, //初始页
       pagesize: 10, //每页的数据
@@ -149,7 +138,14 @@ export default {
 
     //功能：修改按钮点击触发页面跳转
     goto(id) {
+      //页面跳转
       this.$router.replace("/main/user/usAlter" + id);
+      //跳转提示
+      this.$notify({
+        title: "成功",
+        message: "跳转到修改用户页",
+        type: "success",
+      });
     },
 
     //功能；点击删除按钮触发删除事件
@@ -195,14 +191,16 @@ export default {
             //用户名存在，显示信息
             this.userList = p.data.data;
             this.search = ""; //清空输入框
+            this.sign = true;
           } else {
-            //用户名不存在，提示弹框，显示备份数据
+            //用户名不存在，提示弹框，重新渲染数据
             this.$message({
               showClose: true,
               message: "无此用户！",
               type: "warning",
             });
             this.checkUser();
+            this.sign = false;
           }
         } catch (error) {
           console.log("用户名验证请求失败", error);
@@ -210,14 +208,18 @@ export default {
       }
     },
 
+    //功能：点击返回
+    goBack() {
+      this.checkUser();
+      this.sign = false;
+    },
+
     // 初始页currentPage、初始每页数据数pagesize和数据data
     handleSizeChange: function (size) {
       this.pagesize = size;
-      console.log(this.pagesize); //每页下拉显示数据
     },
     handleCurrentChange: function (currentPage4) {
       this.currentPage4 = currentPage4;
-      console.log(this.currentPage4); //点击第几页
     },
     handleSelectionChange() { },
     formatter() { },
