@@ -5,22 +5,18 @@
     <router-view />
   </div>
 </template>
-
 <script>
 export default {
   name: "App",
   data() {
     return {
-    
     };
   },
   methods: {
-   
   },
   components: {},
 };
 </script>
-
 <style lang="scss">
 html,
 body {
