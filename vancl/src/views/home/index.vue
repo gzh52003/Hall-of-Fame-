@@ -17,14 +17,13 @@
       </van-col>
       <van-col span="3">
         <van-icon color="white" size="30px" name="ellipsis" style="margin-top:5px" />
-        <!-- <van-icon name="weapp-nav" /> -->
       </van-col>
     </van-row>
+
     <!-- 轮播图 -->
     <van-swipe class="my-swipe" :autoplay="2000" indicator-color="green">
       <van-swipe-item v-for="item in imgSwipe" :key="item.id">
-        <img :src="item.imgurl" />
-        <span>{{item.name}}</span>
+        <img v-lazy="item.imgurl" />
       </van-swipe-item>
     </van-swipe>
   </div>
@@ -47,14 +46,14 @@ export default {
       imgSwipe: [],
     };
   },
+
   components: {},
+
   methods: {},
   async created() {
     try {
       const p = await request.homeSwipt(5);
-      //console.log("数据为", p.data.data);
       this.imgSwipe = p.data.data;
-      console.log('imgSwipe数据为',this.imgSwipe);
     } catch (error) {
       console.log(error);
     }
@@ -62,5 +61,12 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang='scss'>
+.my-swipe{
+  height: 170px;
+  img{
+    height: 100%;
+    margin:0 100px;
+  }
+}
 </style>
