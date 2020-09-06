@@ -7,6 +7,11 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path:'/goodslist/:id',
+    name:'Goodslist',
+    component:()=>import('@/pages/goodslist') //商品详情
+  },
+  {
     path: '/',
     redirect: '/home'
   },
@@ -51,6 +56,24 @@ const routes = [
     path: '/signin',
     name: 'Signin',
     component: () => import('@/pages/Signin')
+  },
+  //订单页
+  {
+    path:'/order',
+    name:'Order',
+    component:()=>import('@/pages/order')
+  },
+  //频道页第一层跳转id
+  {
+    path:'/classification/:id',
+    name:'Classification',
+    component:()=>import('@/pages/classification')
+  },
+  //频道页第二层跳转
+  {
+    path:'/joint',
+    name:'Joint',
+    component:()=>import('@/pages/joint')
   },
   {
     //404

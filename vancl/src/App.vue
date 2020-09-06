@@ -1,8 +1,16 @@
 <template>
   <div id="app">
     <router-view />
-    <van-tabbar v-model="active" route>
-      <van-tabbar-item v-for="item in navList" :to="item.path" :key="item.path" :icon="item.icon">{{item.text}}</van-tabbar-item>
+    <van-tabbar
+      v-model="active"
+      route
+    >
+      <van-tabbar-item
+        v-for="item in navList"
+        :to="item.path"
+        :key="item.path"
+        :icon="item.icon"
+      >{{item.text}}</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -49,6 +57,12 @@ export default {
           path: "/mine",
           icon: "contact",
         },
+        // {
+        //   text: "全部订单",
+        //   name: "订单",
+        //   path: "/mine/dingdan.vue",
+        // },
+
       ],
     };
   },

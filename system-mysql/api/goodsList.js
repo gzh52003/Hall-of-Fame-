@@ -1,17 +1,19 @@
 const { Router } = require('express');  //引入框架
 const router = Router();  //启动路由
-
 const request = require('../mysql');  //引入数据库方法
+
 
 //查询多条商品
 router.post('/', async (req, res) => {
   const { num } = req.body;
+  
   let sql;
   if (num) {
     sql = `select * from goodslist limit ${num}`;
   } else {
     sql = `select * from goodslist`;
   }
+  console.log(sql)
   try {
     let data = await request(sql);
     let info = {};
@@ -40,30 +42,25 @@ router.post('/', async (req, res) => {
     res.send(info)
   }
 })
-
-
-
-
-
-
-//添加商品
-/* router.post('/', async (req, res) => {
+//根据id传数据
+ router.get('/:id', async (req, res) => {
   try {
-    const { goodsname, origin, price, sum } = req.body;
-    const sql = `insert into goods (goodsname,origin,price,sum) values ('${goodsname}','${origin}',${price},'${sum}')`;
+    const { id } = req.params;
+    const sql = `SELECT * FROM goodslist WHERE id=${id}`;
     const data = await request(sql);
     let info = {};
-    if (data) {
+    if (data.length) {
       info = {
         code: 200,
         state: true,
-        meg: "添加成功"
+        data,
+        meg: "查询成功"
       }
     } else {
       info = {
         code: 300,
         state: false,
-        meg: "添加失败"
+        meg: "查询失败"
       }
     }
     res.send(info)
@@ -77,7 +74,18 @@ router.post('/', async (req, res) => {
     res.send(info)
   }
 })
- */
+ 
+
+
+
+
+
+
+
+
+
+
+
 //删除商品
 router.delete('/:id', async (req, res) => {
   try {
