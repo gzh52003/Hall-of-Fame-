@@ -1,8 +1,15 @@
 <template>
   <div id="app">
     <router-view />
-    <van-tabbar v-model="active" route>
-      <van-tabbar-item v-for="item in navList" :to="item.path" :key="item.path" :icon="item.icon">{{item.text}}</van-tabbar-item>
+    <!-- 底部导航 -->
+    <van-tabbar v-model="active" route placeholder v-show="showMenu">
+      <van-tabbar-item
+        v-for="item in navList"
+        :to="item.path"
+        :key="item.path"
+        :icon="item.icon"
+        :badge="item.name=='cart'?badgeList:''"
+      >{{item.text}}</van-tabbar-item>
     </van-tabbar>
   </div>
 </template>
@@ -18,6 +25,7 @@ export default {
   data() {
     return {
       active: 0,
+      showMenu: true, //底部导航显示隐藏
       navList: [
         {
           text: "凡客",
@@ -52,8 +60,28 @@ export default {
       ],
     };
   },
+  computed: {
+    badgeList() {
+      return this.$store.state.goodslist.length;
+    },
+  },
 };
 </script>
 
 <style lang="scss">
+.price {
+  del,
+  span {
+    &::before {
+      content: "￥";
+    }
+  }
+  del {
+    color: rgb(97, 100, 100);
+    margin-right: 10px;
+  }
+  span {
+    color: red;
+  }
+}
 </style>

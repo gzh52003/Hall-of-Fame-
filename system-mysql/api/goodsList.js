@@ -41,33 +41,28 @@ router.post('/', async (req, res) => {
   }
 })
 
-
-
-
-
-
-//添加商品
-/* router.post('/', async (req, res) => {
+//根据id查询商品
+router.get('/:id', async (req, res) => {
   try {
-    const { goodsname, origin, price, sum } = req.body;
-    const sql = `insert into goods (goodsname,origin,price,sum) values ('${goodsname}','${origin}',${price},'${sum}')`;
+    const { id } = req.params;
+    const sql = `select * from goodslist WHERE id=${id}`;
     const data = await request(sql);
     let info = {};
-    if (data) {
+    if (data.length) {
       info = {
         code: 200,
         state: true,
-        meg: "添加成功"
+        data,
+        meg: "查询成功"
       }
     } else {
       info = {
         code: 300,
         state: false,
-        meg: "添加失败"
+        meg: "查询失败"
       }
     }
     res.send(info)
-    console.log(data);
   } catch (error) {
     let info = {
       code: error,
@@ -77,7 +72,19 @@ router.post('/', async (req, res) => {
     res.send(info)
   }
 })
- */
+
+
+
+
+
+
+
+
+
+
+
+
+
 //删除商品
 router.delete('/:id', async (req, res) => {
   try {
