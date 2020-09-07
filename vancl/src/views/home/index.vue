@@ -108,6 +108,7 @@
   </div>
 </template>
 <script>
+import request from "@/api/goodsApi";
 import Vue from "vue";
 import {
   Swipe,
@@ -163,13 +164,12 @@ export default {
         this.goodsList = data.data;
         console.log('数据', data.data);
       } catch (error) {
-        //console.log(error);
+        console.log(error);
       }
     },
 
     //功能:点击商品跳转
     gotolist(id) {
-      //console.log('点击了id为', id)
       //实现页面跳转并携带数据
       this.$router.replace('/goodslist/' + id)
     }
@@ -191,17 +191,5 @@ export default {
     margin: 0 100px;
   }
 }
-// .goodslist {
-//   width: 100%;
-//   display: grid;
-//   grid-template-columns: repeat(3, 33%);
-//   .items {
-//     // width: 33%;
-//     // height: 200px;
-//     border: 1px solid red;
-//     img {
-//       width: 100%;
-//     }
-//   }
-// }
+
 </style>

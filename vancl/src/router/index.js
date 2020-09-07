@@ -76,6 +76,12 @@ const routes = [
     component:()=>import('@/pages/joint')
   },
   {
+    //商品详情页
+    path: '/goodslist:id',
+    name: 'Goodslist',
+    component: () => import('@/pages/goodslist')
+  },
+  {
     //404
     path: '/404',
     name: 'Notfound',

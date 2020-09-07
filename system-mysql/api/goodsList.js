@@ -42,11 +42,12 @@ router.post('/', async (req, res) => {
     res.send(info)
   }
 })
-//根据id传数据
- router.get('/:id', async (req, res) => {
+
+//根据id查询商品
+router.get('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const sql = `SELECT * FROM goodslist WHERE id=${id}`;
+    const sql = `select * from goodslist WHERE id=${id}`;
     const data = await request(sql);
     let info = {};
     if (data.length) {
@@ -64,7 +65,6 @@ router.post('/', async (req, res) => {
       }
     }
     res.send(info)
-    console.log(data);
   } catch (error) {
     let info = {
       code: error,
@@ -74,7 +74,8 @@ router.post('/', async (req, res) => {
     res.send(info)
   }
 })
- 
+
+
 
 
 
