@@ -4,7 +4,7 @@ export default{
         return request({
             method:'post',
             data:{
-            
+
             },
             url:'/goodslist'
         })
