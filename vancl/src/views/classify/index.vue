@@ -15,8 +15,8 @@
         <!-- 利用索引值改变字体颜色 -->
         <van-sidebar-item
           v-for="(item,index) in checkitem"
-          :key="item"
-          @click="clickCategory(index)"
+          :key="item.id"
+          @click="clickCategory(index.id)"
           :class="{active:icon==index}"
           :title="item"
           class="sid"
@@ -88,7 +88,9 @@ export default {
     guo(id) {
       this.$router.replace("/home")
     },
-    clickCategory(index) {
+    //点击实现字体变色
+    // 实现点击时候进行数据改变的思路：利用id进行数据的更改，过滤数据进行页面重新渲染
+    clickCategory(index, id) {
       this.icon = index
     },
     // goodlis数据
