@@ -57,11 +57,6 @@ export default {
           path: "/mine",
           icon: "contact",
         },
-        // {
-        //   text: "全部订单",
-        //   name: "订单",
-        //   path: "/mine/dingdan.vue",
-        // },
 
       ],
     };

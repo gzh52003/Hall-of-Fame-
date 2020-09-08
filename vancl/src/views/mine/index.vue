@@ -1,13 +1,7 @@
 <template>
   <div>
     <!-- 头部 -->
-    <van-nav-bar
-      title="个人中心"
-      left-arrow
-      style="background:brown;"
-      @click-left="guo"
-    >
-    </van-nav-bar>
+    <van-nav-bar title="个人中心" left-arrow style="background:brown;" @click-left="guo"></van-nav-bar>
     <van-row class="facx">
       <van-col span="24">
         <van-image
@@ -23,76 +17,37 @@
             class="flas"
             src="http://i10.m.vancl.com/Content/H5/img/H5-V0.jpg"
           />
-          <van-icon
-            class="icons"
-            name="setting-o"
-          />
-          <van-button
-            round
-            type="info"
-            color="#58bc58"
-            class="buttom"
-          >普通会员</van-button>
-          <van-row
-            type="flex"
-            justify="space-around"
-            class="sizes"
-          >
+          <van-icon class="icons" name="setting-o" />
+          <van-button round type="info" color="#58bc58" class="buttom">普通会员</van-button>
+          <van-row type="flex" justify="space-around" class="sizes">
             <van-col span="3">积分:0</van-col>
             <van-col span="3">余额: 88</van-col>
             <van-col span="3">成长值: 8</van-col>
           </van-row>
         </van-image>
-
       </van-col>
     </van-row>
     <!-- 全部菜单 -->
     <van-row class="background">
-      <van-col
-        span="12"
-        class="caidan"
-      >全部菜单</van-col>
+      <van-col span="12" class="caidan">全部菜单</van-col>
       <!-- 右边箭头 -->
       <van-col span="12">
-        <van-icon
-          @click="rong"
-          size="20"
-          name="arrow"
-          class="icona"
-        />
+        <van-icon @click="rong" size="20" name="arrow" class="icona" />
       </van-col>
     </van-row>
     <!-- 状态栏 -->
     <div @click="list">
       <van-tabbar v-model="active">
-        <van-tabbar-item
-          icon="home-o"
-          color="red"
-        >标签</van-tabbar-item>
+        <van-tabbar-item icon="home-o" color="red">标签</van-tabbar-item>
       </van-tabbar>
       <van-grid>
-        <van-grid-item
-          icon="certificate"
-          text="进行中"
-          color="red"
-        />
+        <van-grid-item icon="certificate" text="进行中" color="red" />
       </van-grid>
     </div>
     <!-- 宫格 -->
-    <van-grid
-      :border="false"
-      :column-num="4"
-      class="margin"
-    >
-      <van-grid-item
-        v-for="item in goodsList"
-        :key="item.id"
-      >
-
-        <van-image
-          :src="item.imgurl"
-          class="goods"
-        />
+    <van-grid :border="false" :column-num="4" class="margin">
+      <van-grid-item v-for="item in goodsList" :key="item.id">
+        <van-image :src="item.imgurl" class="goods" />
         <h4 class="strings">{{item.name}}</h4>
       </van-grid-item>
     </van-grid>
@@ -101,7 +56,7 @@
 
 <script>
 import Vue from "vue";
-import { homeSwipt } from "@/api/goodsList";
+import request from "@/api/goodsApi";
 import {
   Toast,
   NavBar,
@@ -112,8 +67,7 @@ import {
   Button,
   Tabbar,
   TabbarItem,
-
-} from 'vant';
+} from "vant";
 Vue.use(Tabbar);
 Vue.use(TabbarItem);
 Vue.use(Button);
@@ -128,36 +82,34 @@ export default {
     return {
       active: 0,
       goodsList: [],
-    }
+    };
   },
   components: {},
 
   methods: {
     guo(id) {
-      this.$router.replace("/classify")
+      this.$router.replace("/classify");
     },
     rong() {
-      this.$router.replace("/order")
-      //console.log("这是", id)
+      this.$router.replace("/order");
     },
     list() {
-      this.$router.replace("/order")
+      this.$router.replace("/order");
     },
 
     async getlistgoods() {
       try {
-        const { data } = await homeSwipt(12);
+        const { data } = await request.reqGoodslist(12);
         this.goodsList = data.data;
-        // console.log('数据', data.data);
       } catch (error) {
-        //console.log(error);
+        console.log("请求列表数据出错", error);
       }
     },
   },
   created() {
-    this.getlistgoods()
+    this.getlistgoods();
   },
-}
+};
 </script>
 
 <style scoped lang="scss">

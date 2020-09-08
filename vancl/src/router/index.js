@@ -7,11 +7,6 @@ Vue.use(VueRouter)
 
 const routes = [
   {
-    path:'/goodslist/:id',
-    name:'Goodslist',
-    component:()=>import('@/pages/goodslist') //商品详情
-  },
-  {
     path: '/',
     redirect: '/home'
   },
@@ -64,17 +59,17 @@ const routes = [
     component:()=>import('@/pages/order')
   },
   //频道页第一层跳转id
-  {
-    path:'/classification/:id',
-    name:'Classification',
-    component:()=>import('@/pages/classification')
-  },
-  //频道页第二层跳转
-  {
-    path:'/joint',
-    name:'Joint',
-    component:()=>import('@/pages/joint')
-  },
+  // {
+  //   path:'/classification/:id',
+  //   name:'Classification',
+  //   component:()=>import('@/pages/classification')
+  // },
+  // //频道页第二层跳转
+  // {
+  //   path:'/joint',
+  //   name:'Joint',
+  //   component:()=>import('@/pages/joint')
+  // },
   {
     //商品详情页
     path: '/goodslist:id',

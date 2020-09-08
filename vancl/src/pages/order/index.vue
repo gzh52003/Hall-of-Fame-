@@ -19,7 +19,7 @@
 
 <script>
 import Vue from "vue";
-import { homeSwipt } from "@/api/goodsList";
+// import { homeSwipt } from "@/api/goodsList";
 import {
   Toast,
   NavBar,

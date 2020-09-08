@@ -1,3 +1,5 @@
+/* 首页 */
+
 <template>
   <div>
     <!-- 搜索框 -->
@@ -17,37 +19,19 @@
           />
         </van-col>
         <van-col span="3">
-          <van-icon
-            color="white"
-            size="30px"
-            name="ellipsis"
-            style="margin-top:5px"
-          />
+          <van-icon color="white" size="30px" name="ellipsis" style="margin-top:5px" />
         </van-col>
       </van-row>
     </van-sticky>
     <!-- 轮播图 -->
-    <van-swipe
-      class="my-swipe"
-      :autoplay="2000"
-      indicator-color="green"
-    >
-      <van-swipe-item
-        v-for="item in imgSwipe"
-        :key="item.id"
-      >
-        <img
-          v-lazy="item.imgurl"
-          @click="gotolist(item.id)"
-        />
+    <van-swipe class="my-swipe" :autoplay="2000" indicator-color="green">
+      <van-swipe-item v-for="item in imgSwipe" :key="item.id">
+        <img v-lazy="item.imgurl" />
       </van-swipe-item>
     </van-swipe>
     <!-- banner图 -->
     <van-row>
-      <van-col
-        span="22"
-        offset="1"
-      >
+      <van-col span="22" offset="1">
         <van-image
           height="50"
           src="https://mi2.vanclimg.com/oms/2020_6_18_16_10_3_9405_976x145.jpg"
@@ -62,49 +46,24 @@
       direction="horizontal"
       style="margin: 30px"
     >
-      <van-grid-item
-        v-for="item in imgGrid"
-        :key="item.id"
-      >
-        <van-image
-          width="70"
-          height="70"
-          :src="item.imgurl"
-        />
+      <van-grid-item v-for="item in imgGrid" :key="item.id">
+        <van-image width="70" height="70" :src="item.imgurl" />
       </van-grid-item>
     </van-grid>
 
-    <!-- 列表原生写法 -->
-    <!-- <div class="goodslist">
-      <div
-        class="items"
-        v-for="item in goodsList"
-        :key="item.id"
-      >
-        <img
-          :src="item.imgurl"
-          alt=""
-        >
-        <p>{{item.name}}</p>
-      </div>
-    </div> -->
     <!-- 宫格 -->
-    <van-grid
-      :border="false"
-      :column-num="3"
-    >
-      <van-grid-item
-        v-for="item in goodsList"
-        :key="item.id"
-        @click="gotolist(item.id)"
-      >
-
+    <van-grid :border="false" :column-num="3">
+      <van-grid-item v-for="item in goodsList" :key="item.id" @click="gotolist(item.id)">
         <van-image :src="item.imgurl" />
-        <h4>{{item.name}}</h4>
-        <span style="color:red">￥{{item.price}}</span>
+        <!-- <h4>{{item.name}}</h4>
+        <span style="color:red">￥{{item.price}}</span>-->
+        <h5 style="margin:10px 0">{{item.name}}</h5>
+        <p class="price">
+          <del>{{item.oldPrice}}</del>
+          <span>{{item.price}}</span>
+        </p>
       </van-grid-item>
     </van-grid>
-
   </div>
 </template>
 <script>
@@ -123,7 +82,7 @@ import {
   GridItem,
   Sticky,
 } from "vant";
-import { homeSwipt } from "@/api/goodsList";
+
 Vue.use(Sticky);
 Vue.use(Swipe);
 Vue.use(SwipeItem);
@@ -139,46 +98,41 @@ export default {
   data() {
     return {
       value: "",
-      imgSwipe: [],
+      imgSwipe: [], //轮播图数据
       imgGrid: [],
-      goodsList: [],
+      goodsList: [], //宫格数据
     };
   },
   components: {},
   methods: {
     async getbanner() {
       try {
-        const { data } = await homeSwipt(5);
+        const { data } = await request.reqGoodslist(5);
         this.imgSwipe = data.data;
-        //console.log('数据', data.data);
         this.imgGrid = data.data.slice(2, 5);
-        // console.log('截取', this.imgGrid);
       } catch (error) {
-        console.log(error);
+        console.log("出错为", error);
       }
     },
-    // goodlis数据
+    //宫格的数据
     async getlistgoods() {
       try {
-        const { data } = await homeSwipt(12);
-        this.goodsList = data.data;
-        console.log('数据', data.data);
+        const { data } = await request.reqGoodslist();
+        this.goodsList = data.data.slice(5);
       } catch (error) {
         console.log(error);
       }
     },
 
-    //功能:点击商品跳转
+    //功能:点击商品跳转到详情页
     gotolist(id) {
       //实现页面跳转并携带数据
-      this.$router.replace('/goodslist/' + id)
-    }
-
+      this.$router.push("/goodslist" + id);
+    },
   },
 
   created() {
-    this.getbanner(),
-      this.getlistgoods()
+    this.getbanner(), this.getlistgoods();
   },
 };
 </script>
@@ -191,5 +145,7 @@ export default {
     margin: 0 100px;
   }
 }
-
+.price{
+  margin: 0;
+}
 </style>

@@ -49,7 +49,7 @@
 </template>
 <script>
 import Vue from "vue";
-import { homeSwipt } from "@/api/goodsList";
+import request from "@/api/goodsApi";
 import { Toast, NavBar } from 'vant';
 import { Sidebar, SidebarItem } from 'vant';
 import { Grid, GridItem } from 'vant';
@@ -96,7 +96,7 @@ export default {
     // goodlis数据
     async getlistgoods() {
       try {
-        const { data } = await homeSwipt(12);
+        const { data } = await request.reqGoodslist(12);
         this.goodsList = data.data;
         //console.log('数据', data.data);
       } catch (error) {
