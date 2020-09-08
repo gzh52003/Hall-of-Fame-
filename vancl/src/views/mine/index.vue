@@ -1,40 +1,115 @@
 <template>
-  <div class="wrap">
-     <div class="topTitle" @click="backhome">
-       <span id="topBack" class="topBack"></span>
-     <span class="curTitle">登录</span>
-       <span></span>
-     </div>
-  <div class="reg-input login1" style=""> <div class="clear" style="margin-top:2em;"> <input type="text" id="UserName" placeholder="点击输入手机号/Email" name="UserName" value=""> </div> <div class="clear" style="margin-top:2em;"> <input type="password" id="Password" placeholder="请输入密码" name="Password"> </div> <div class="user-login" style="border-bottom:0px;"> <input type="hidden" name="url" id="url" value="https://m.vancl.com/User/UserCenterIndex?guid=237be88ad7424fbbbf00c77d89f8bdcd"> <p id="errinfo" style=""> </p> </div>  <input type="hidden" id="hidLoginType" value="1"> </div>
-<div class="topTitle">
-      <span class="curTitle">登录</span>
-     </div>
-    <div class="box">
-     <span class="sp1" @click="reg">免费注册&emsp;></span>
-     <span class="sp2">忘记密码&emsp;></span>
+  <div>
+    <!-- 头部 -->
+    <van-nav-bar title="个人中心" left-arrow style="background:brown;" @click-left="guo"></van-nav-bar>
+    <van-row class="facx">
+      <van-col span="24">
+        <van-image
+          width="100%"
+          height="200px"
+          class="icon"
+          src="http://i10.m.vancl.com/Content/H5/img/uc-topbgd.png"
+        >
+          <van-image
+            round
+            width="70"
+            height="70"
+            class="flas"
+            src="http://i10.m.vancl.com/Content/H5/img/H5-V0.jpg"
+          />
+          <van-icon class="icons" name="setting-o" />
+          <van-button round type="info" color="#58bc58" class="buttom">普通会员</van-button>
+          <van-row type="flex" justify="space-around" class="sizes">
+            <van-col span="3">积分:0</van-col>
+            <van-col span="3">余额: 88</van-col>
+            <van-col span="3">成长值: 8</van-col>
+          </van-row>
+        </van-image>
+      </van-col>
+    </van-row>
+    <!-- 全部菜单 -->
+    <van-row class="background">
+      <van-col span="12" class="caidan">全部菜单</van-col>
+      <!-- 右边箭头 -->
+      <van-col span="12">
+        <van-icon @click="rong" size="20" name="arrow" class="icona" />
+      </van-col>
+    </van-row>
+    <!-- 状态栏 -->
+    <div @click="list">
+      <van-tabbar v-model="active">
+        <van-tabbar-item icon="home-o" color="red">标签</van-tabbar-item>
+      </van-tabbar>
+      <van-grid>
+        <van-grid-item icon="certificate" text="进行中" color="red" />
+      </van-grid>
     </div>
+    <!-- 宫格 -->
+    <van-grid :border="false" :column-num="4" class="margin">
+      <van-grid-item v-for="item in goodsList" :key="item.id">
+        <van-image :src="item.imgurl" class="goods" />
+        <h4 class="strings">{{item.name}}</h4>
+      </van-grid-item>
+    </van-grid>
   </div>
 </template>
 
 <script>
+import Vue from "vue";
+import request from "@/api/goodsApi";
+import {
+  Toast,
+  NavBar,
+  Sidebar,
+  SidebarItem,
+  Grid,
+  GridItem,
+  Button,
+  Tabbar,
+  TabbarItem,
+} from "vant";
+Vue.use(Tabbar);
+Vue.use(TabbarItem);
+Vue.use(Button);
+Vue.use(Grid);
+Vue.use(GridItem);
+Vue.use(Sidebar);
+Vue.use(SidebarItem);
+Vue.use(Toast);
+Vue.use(NavBar);
 export default {
   data() {
-      return {
-
-      }
+    return {
+      active: 0,
+      goodsList: [],
+    };
   },
+  components: {},
 
-  components:{},
+  methods: {
+    guo(id) {
+      this.$router.replace("/classify");
+    },
+    rong() {
+      this.$router.replace("/order");
+    },
+    list() {
+      this.$router.replace("/order");
+    },
 
-   methods:{
-       reg(){
-         this.$router.push({path:'/signin'})
-       },
-       backhome(){
-         this.$router.push({path:'/home'})
-       }
-   }
-}
+    async getlistgoods() {
+      try {
+        const { data } = await request.reqGoodslist(12);
+        this.goodsList = data.data;
+      } catch (error) {
+        console.log("请求列表数据出错", error);
+      }
+    },
+  },
+  created() {
+    this.getlistgoods();
+  },
+};
 </script>
 
 <style lang='scss' scoped>
