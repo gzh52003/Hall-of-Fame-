@@ -36,7 +36,7 @@
 
 <script>
 import Vue from "vue";
-// import { homeSwipt } from "@/api/goodsList";
+ import request from "@/api/goodsApi";
 import {
   Toast,
   NavBar,
@@ -83,7 +83,7 @@ export default {
 
     async getlistgoods() {
       try {
-        const { data } = await homeSwipt(12);
+        const { data } = await request.reqGoodslist(12);
         this.goodsList = data.data;
         // console.log('数据', data.data);
       } catch (error) {
@@ -92,7 +92,7 @@ export default {
     },
     //点击商品实现精确跳转
     gotolist(id) {
-      this.$router.replace('/goodslist/' + id)
+      this.$router.replace('/goodslist' + id)
     }
   },
   created() {
