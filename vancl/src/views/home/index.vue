@@ -16,12 +16,14 @@
             style="height:40px"
           />
         </van-col>
+        <!-- 登录注册按钮 -->
         <van-col span="3">
           <van-icon
             color="white"
             size="30px"
             name="ellipsis"
             style="margin-top:5px"
+            @click="login"
           />
         </van-col>
       </van-row>
@@ -166,12 +168,14 @@ export default {
         //console.log(error);
       }
     },
-
     //功能:点击商品跳转
     gotolist(id) {
       //console.log('点击了id为', id)
       //实现页面跳转并携带数据
       this.$router.replace('/goodslist/' + id)
+    },
+    login() {
+      this.$router.replace('/')
     }
 
   },
