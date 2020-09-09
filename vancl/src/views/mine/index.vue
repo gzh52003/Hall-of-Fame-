@@ -112,87 +112,69 @@ export default {
 };
 </script>
 
-<style lang='scss' scoped>
-.wrap{
-    max-width: 640px;
-    margin: 0 auto;
-    overflow: hidden;
-    min-height: 100%;
+<style scoped lang="scss">
+::v-deep .van-icon {
+  color: aliceblue;
+  font-size: 35px;
+}
+::v-deep .van-nav-bar__title {
+  font-size: 20px;
+  color: aliceblue;
+}
+.facx {
+  position: relative;
+  margin-bottom: 10px;
 
-.topTitle {
-    position: relative;
-    top: 0;
-    max-width: 640px;
+  .icon {
+    float: left;
+  }
+  .flas {
+    position: absolute;
+    top: 30px;
+    left: 42%;
+  }
+  .icons {
+    top: 15px;
+    right: 10px;
+    font-size: 20px;
+    color: lavenderblush;
+    position: absolute;
+  }
+  .buttom {
+    height: 20px;
+    font-size: 12px;
+    position: absolute;
+    top: 120px;
+    left: 42%;
+  }
+  .sizes {
     width: 100%;
-    height: 45px;
-    overflow: hidden;
-    background: #b81c22;
-    text-align: center;
-    line-height: 4rem;
-    .curTitle {
-    display: inline-block;
-    margin: 0 auto;
-    font-size: 1em;
+    font-size: 11px;
     color: #fff;
-    width: 34px;
-    height: 100%;
-    text-align: center;
-    line-height: 34px;
     position: absolute;
-    top: 0;
-    left: 165px;
-    line-height: 40px;
-    }
-    .topBack {
-    position: absolute;
-    top: 50%;
-    left: 2rem;
-    transform: translateY(-50%) rotate(45deg);
-    -webkit-transform: translateY(-50%) rotate(45deg);
-    width: 1.4rem;
-    height: 1.4rem;
-    border-bottom: 2px solid #fff;
-    border-left: 2px solid #fff;
-    cursor: pointer;
+    top: 80%;
+  }
 }
+.background {
+  padding: 5px 0;
+  background: lavender;
+  .caidan {
+    font-size: 12px;
+    line-height: 30px;
+  }
+  .icona {
+    margin-left: 80%;
+    color: #ccc;
+    line-height: 30px;
+  }
 }
 
-
-
-
-
-
+.goods {
+  width: 40px;
+  height: 40px;
 }
-form{
-      margin: 0;
-    padding: 0;
-    line-height: 1.5;
-    font-size: 11.25px；
-    
-    
-    
-}
-.reg-input {
-  padding: 2.5em 2em 0 2em;
-  font-size: 11.25px;
-
-
-}
-input{
-  width: 100%;
-  height: 53.5px;
-  border: rebeccapurple;
-}
-.box{
-  width: 367px;
-  height: 18px;
-  
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-top: 9px;
-  font-size: 12.5px;
-  color: #4c4c4c;
-  
+.strings {
+  margin-top: 0px;
+  font-size: 12px;
 }
 </style>
