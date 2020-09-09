@@ -18,27 +18,48 @@
             style="height:40px"
           />
         </van-col>
+        <!-- 登录注册按钮 -->
         <van-col span="3">
-          <van-icon color="white" size="30px" name="ellipsis" style="margin-top:5px" />
+          <van-icon
+            color="white"
+            size="30px"
+            name="ellipsis"
+            style="margin-top:5px"
+          />
         </van-col>
       </van-row>
     </van-sticky>
     <!-- 轮播图 -->
-    <van-swipe class="my-swipe" :autoplay="2000" indicator-color="green">
-      <van-swipe-item v-for="item in imgSwipe" :key="item.id">
+    <van-swipe
+      class="my-swipe"
+      :autoplay="2000"
+      indicator-color="green"
+    >
+      <van-swipe-item
+        v-for="item in imgSwipe"
+        :key="item.id"
+      >
         <img v-lazy="item.imgurl" />
       </van-swipe-item>
     </van-swipe>
     <!-- banner图 -->
     <van-row>
-      <van-col span="22" offset="1">
+      <van-col
+        span="22"
+        offset="1"
+      >
         <van-image
           height="50"
           src="https://mi2.vanclimg.com/oms/2020_6_18_16_10_3_9405_976x145.jpg"
         />
       </van-col>
       <van-col span="3">
-        <van-icon color="white" size="30px" name="ellipsis" style="margin-top:5px" />
+        <van-icon
+          color="white"
+          size="30px"
+          name="ellipsis"
+          style="margin-top:5px"
+        />
       </van-col>
     </van-row>
     <!-- 轮播图2 -->
@@ -49,14 +70,28 @@
       direction="horizontal"
       style="margin: 30px"
     >
-      <van-grid-item v-for="item in imgGrid" :key="item.id">
-        <van-image width="70" height="70" :src="item.imgurl" />
+      <van-grid-item
+        v-for="item in imgGrid"
+        :key="item.id"
+      >
+        <van-image
+          width="70"
+          height="70"
+          :src="item.imgurl"
+        />
       </van-grid-item>
     </van-grid>
 
     <!-- 宫格 -->
-    <van-grid :border="false" :column-num="3">
-      <van-grid-item v-for="item in goodsList" :key="item.id" @click="gotolist(item.id)">
+    <van-grid
+      :border="false"
+      :column-num="3"
+    >
+      <van-grid-item
+        v-for="item in goodsList"
+        :key="item.id"
+        @click="gotolist(item.id)"
+      >
         <van-image :src="item.imgurl" />
         <!-- <h4>{{item.name}}</h4>
         <span style="color:red">￥{{item.price}}</span>-->
@@ -138,14 +173,14 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-.my-swipe{
+.my-swipe {
   height: 170px;
-  img{
+  img {
     height: 100%;
-    margin:0 100px;
+    margin: 0 100px;
   }
 }
-.price{
+.price {
   margin: 0;
 }
 </style>
