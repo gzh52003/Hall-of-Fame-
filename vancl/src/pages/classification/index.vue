@@ -33,7 +33,7 @@
 
 <script>
 import Vue from "vue";
-//import { homeSwipt } from "@/api/goodsList";
+import requset from "@/api/goodsApi";
 import { Toast, NavBar } from 'vant';
 import { Sidebar, SidebarItem } from 'vant';
 import { Grid, GridItem } from 'vant';
@@ -60,7 +60,7 @@ export default {
     // goodlis数据
     async getlistgoods() {
       try {
-        const { data } = await homeSwipt(12);
+        const { data } = await requset.reqGoodslist(12);
         this.goodsList = data.data;
         //console.log('数据', data.data);
       } catch (error) {
@@ -69,7 +69,7 @@ export default {
     },
     //点击获取商品的详细信息
     gotolist(id) {
-      this.$router.replace('/goodslist/' + id)
+      this.$router.replace('/goodslist' + id)
     }
   },
   created() {
