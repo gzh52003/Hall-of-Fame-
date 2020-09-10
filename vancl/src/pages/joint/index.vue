@@ -20,26 +20,12 @@
 import Vue from "vue";
 import request from "@/api/goodsApi";
 import {
-  Toast,
   NavBar,
-  Sidebar,
-  SidebarItem,
   Grid,
   GridItem,
-  Button,
-  Tabbar,
-  TabbarItem,
-  Image as VanImage,
 } from "vant";
-Vue.use(VanImage);
-Vue.use(Tabbar);
-Vue.use(TabbarItem);
-Vue.use(Button);
 Vue.use(Grid);
 Vue.use(GridItem);
-Vue.use(Sidebar);
-Vue.use(SidebarItem);
-Vue.use(Toast);
 Vue.use(NavBar);
 export default {
   data() {
@@ -65,9 +51,8 @@ export default {
       try {
         const { data } = await request.reqGoodslist(12);
         this.goodsList = data.data;
-        // console.log('数据', data.data);
       } catch (error) {
-        //console.log(error);
+        console.log('请求出错',error);
       }
     },
     //点击商品实现精确跳转
