@@ -3,9 +3,17 @@
   <div>
     <!-- 头部导航 -->
     <van-sticky>
-      <van-nav-bar title="商品详情" left-arrow @click-left="goto">
+      <van-nav-bar
+        title="商品详情"
+        left-arrow
+        @click-left="goto"
+      >
         <template #right>
-          <van-icon color="rgb(122,144,250)" size="20" name="ellipsis" />
+          <van-icon
+            color="rgb(122,144,250)"
+            size="20"
+            name="ellipsis"
+          />
         </template>
       </van-nav-bar>
     </van-sticky>
@@ -20,7 +28,10 @@
     />
     <div class="box">
       <h3 style="margin:0 0 10px 0">{{goods.name}}</h3>
-      <van-tag round type="danger">爆款</van-tag>
+      <van-tag
+        round
+        type="danger"
+      >爆款</van-tag>
       <p class="price">
         <del>{{goods.oldPrice}}</del>
         <span>{{goods.price}}</span>
@@ -28,9 +39,19 @@
     </div>
 
     <!-- 商品推荐 -->
-    <van-divider content-position="left" style="font-size:17px">推荐商品</van-divider>
-    <van-grid :border="false" :column-num="3">
-      <van-grid-item v-for="item in goodslist" :key="item.id" @click="toGoods(item.id)">
+    <van-divider
+      content-position="left"
+      style="font-size:17px"
+    >推荐商品</van-divider>
+    <van-grid
+      :border="false"
+      :column-num="3"
+    >
+      <van-grid-item
+        v-for="item in goodslist"
+        :key="item.id"
+        @click="toGoods(item.id)"
+      >
         <van-image :src="item.imgurl" />
         <h5>{{item.name}}</h5>
         <p class="price">
@@ -42,11 +63,32 @@
 
     <!-- 底部商品导航 -->
     <van-goods-action>
-      <van-goods-action-icon icon="chat-o" text="客服" color="#07c160" />
-      <van-goods-action-icon icon="cart-o" text="购物车" :badge="cartList.length" />
-      <van-goods-action-icon icon="star" text="已收藏" color="#ff5000" />
-      <van-goods-action-button type="warning" text="加入购物车" @click="toCart" />
-      <van-goods-action-button type="danger" text="立即购买" @click="toBuy" />
+      <van-goods-action-icon
+        icon="chat-o"
+        text="客服"
+        color="#07c160"
+      />
+      <van-goods-action-icon
+        icon="cart-o"
+        text="购物车"
+        :badge="cartList.length"
+        @click="goBuy"
+      />
+      <van-goods-action-icon
+        icon="star"
+        text="已收藏"
+        color="#ff5000"
+      />
+      <van-goods-action-button
+        type="warning"
+        text="加入购物车"
+        @click="toCart"
+      />
+      <van-goods-action-button
+        type="danger"
+        text="立即购买"
+        @click="toBuy"
+      />
     </van-goods-action>
   </div>
 </template>
@@ -118,7 +160,7 @@ export default {
       const { data: datalist } = await request.reqGoodslist(); //请求商品推荐数据
       this.goodslist = datalist.data;
     },
-    
+
     //功能:点击商品加入购物车
     /* 商品存在,数量+1;不存在,购物车列表+1 */
     toCart() {
@@ -140,8 +182,12 @@ export default {
     //功能:点击购买,跳转到购物车页
     toBuy() {
       this.toCart();
-      this.$router.replace("/cart");
+      //this.$router.replace("/cart");
+      this.goBuy()
     },
+    goBuy() {
+      this.$router.replace("/cart");
+    }
   },
 
   created() {
