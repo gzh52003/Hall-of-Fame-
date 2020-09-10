@@ -34,17 +34,10 @@
 <script>
 import Vue from "vue";
 import requset from "@/api/goodsApi";
-import { Toast, NavBar } from 'vant';
-import { Sidebar, SidebarItem } from 'vant';
-import { Grid, GridItem } from 'vant';
-import { Icon } from 'vant';
+import { NavBar,Grid, GridItem } from 'vant';
 
-Vue.use(Icon);
 Vue.use(Grid);
 Vue.use(GridItem);
-Vue.use(Sidebar);
-Vue.use(SidebarItem);
-Vue.use(Toast);
 Vue.use(NavBar);
 export default {
   data() {
