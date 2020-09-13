@@ -1,40 +1,52 @@
 <template>
-  <el-form
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    ref="ruleForm"
-    class="demo-ruleForm"
-    style="width:300px;margin:auto;background:#fff;border-radius:10px;padding:40px 100px;position:relative"
-  >
-    <el-button
-      type="danger"
-      plain
-      size="mini"
-      @click="resetForm"
-      icon="el-icon-close"
-      circle
-      style=" position: absolute;right:40px;top:30px"
-    ></el-button>
-    <el-form-item label="用户名：" prop="username">
-      <el-input type="text" :disabled="true" v-bind:value="ruleForm.username"></el-input>
-    </el-form-item>
-    <el-form-item label="性别：" prop="gender">
-      <el-select v-model.number="ruleForm.gender" style="width:100px">
-        <el-option value="男"></el-option>
-        <el-option value="女"></el-option>
-        <el-option value="保密"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="年龄:" prop="age">
-      <el-input v-model.number="ruleForm.age"></el-input>
-    </el-form-item>
-    <el-form-item style="margin:auto;">
-      <el-popconfirm title="确定提交修改吗？" @onConfirm="submitForm" cancelButtonType="success">
-        <el-button type="primary" slot="reference" plain>提交修改</el-button>
-      </el-popconfirm>
-    </el-form-item>
-  </el-form>
+  <div>
+    <el-header style="height:50px;line-height:50px;margin-bottom:50px">修改用户</el-header>
+    <el-form
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      ref="ruleForm"
+      class="demo-ruleForm"
+      style="width:300px;margin:auto;background:#fff;border-radius:10px;padding:40px 100px;position:relative"
+    >
+      <el-button
+        type="danger"
+        plain
+        size="mini"
+        @click="resetForm"
+        icon="el-icon-close"
+        circle
+        style=" position: absolute;right:40px;top:30px"
+      ></el-button>
+      <el-form-item label="用户名：" prop="username">
+        <el-input type="text" :disabled="true" v-bind:value="ruleForm.username"></el-input>
+      </el-form-item>
+      <el-form-item label="性别：" prop="gender">
+        <el-select v-model.number="ruleForm.gender" style="width:100px">
+          <el-option value="男"></el-option>
+          <el-option value="女"></el-option>
+          <el-option value="保密"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="年龄:" prop="age">
+        <el-input v-model.number="ruleForm.age"></el-input>
+      </el-form-item>
+      <el-form-item label="日期:" prop>
+        <el-date-picker
+          v-model="dateValue"
+          type="date"
+          placeholder="选择日期"
+          format="yyyy 年 MM 月 dd 日"
+          value-format="yyyy-MM-dd"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item style="margin:auto;">
+        <el-popconfirm title="确定提交修改吗？" @onConfirm="submitForm" cancelButtonType="success">
+          <el-button type="primary" slot="reference" plain>提交修改</el-button>
+        </el-popconfirm>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
@@ -62,6 +74,7 @@ export default {
             callback();
           }
         }
+        this.sign = true;
       }, 500);
     };
     //数据
@@ -77,6 +90,8 @@ export default {
       rules: {
         age: [{ validator: checkAge, trigger: "blur" }],
       },
+      dateValue: "", //日期
+      tabDate: "", //日期修改标识
     };
   },
   methods: {
@@ -85,7 +100,8 @@ export default {
       //判断数据有无修改
       if (
         this.ruleForm.gender == this.tabGender &&
-        this.ruleForm.age == this.tabAge
+        this.ruleForm.age == this.tabAge &&
+        this.dateValue == this.tabDate
       ) {
         //表单无修改，不发送请求，弹框提示
         this.$message({
@@ -93,36 +109,25 @@ export default {
           message: "数据无修改！",
           type: "warning",
         });
+      } else if (
+        //只修改日期
+        this.ruleForm.gender == this.tabGender &&
+        this.ruleForm.age == this.tabAge &&
+        this.dateValue !== this.tabDate
+      ) {
+        this.reqAlter();
+      } else if (
+        //只修改性别
+        this.ruleForm.gender !== this.tabGender &&
+        this.ruleForm.age == this.tabAge &&
+        this.dateValue == this.tabDate
+      ) {
+        this.reqAlter();
       } else {
         //表单修改了，发送请求
         if (this.sign) {
           //数据符合规则，发送请求
-          try {
-            const p = await userApi.reqAlterUser(
-              this.$route.params.id,
-              this.ruleForm.gender,
-              this.ruleForm.age
-            );
-            if (p.data.state) {
-              //请求成功
-              this.$message({
-                showClose: true,
-                message: "修改成功！",
-                type: "success",
-              });
-              //页面跳转
-              this.$router.replace("/main/user/usList");
-            } else {
-              //请求失败
-              this.$message({
-                showClose: true,
-                message: "修改失败！",
-                type: "error",
-              });
-            }
-          } catch (error) {
-            console.log("修改用户查询失败", error);
-          }
+          this.reqAlter();
         } else {
           //数据不符规则，弹框提示
           this.$message({
@@ -142,6 +147,40 @@ export default {
         message: "取消修改！",
       });
     },
+
+    //功能：发送修改请求
+    async reqAlter() {
+      try {
+        if (this.dateValue == null) {
+          this.dateValue = "";
+        }
+        const p = await userApi.reqAlterUser(
+          this.$route.params.id,
+          this.ruleForm.gender,
+          this.ruleForm.age,
+          this.dateValue
+        );
+        if (p.data.state) {
+          //请求成功
+          this.$message({
+            showClose: true,
+            message: "修改成功！",
+            type: "success",
+          });
+          //页面跳转
+          this.$router.replace("/main/user/usList");
+        } else {
+          //请求失败
+          this.$message({
+            showClose: true,
+            message: "修改失败！",
+            type: "error",
+          });
+        }
+      } catch (error) {
+        console.log("修改用户查询失败", error);
+      }
+    },
   },
 
   //功能：页面创建即获取动态路由id，发送请求获取这条用户数据
@@ -151,10 +190,10 @@ export default {
       const p = await userApi.reqUserOdd(this.$route.params.id);
       if (p.data.state) {
         //查询成功，渲染数据
-        // this.ruleForm = this.res = p.data.data[0];
         this.ruleForm = p.data.data[0];
         this.tabGender = p.data.data[0].gender;
         this.tabAge = p.data.data[0].age;
+        this.dateValue = this.tabDate = p.data.data[0].date;
       } else {
         console.log("查询失败");
       }

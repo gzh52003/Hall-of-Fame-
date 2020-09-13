@@ -18,11 +18,16 @@
         <el-input type="password" v-model="ruleForm.password"></el-input>
       </el-form-item>
       <el-form-item>
-        <el-button class="but" type="primary" @click="submitForm('ruleForm')">登录</el-button>
-        <!-- <el-button type="primary" @click="goto">注册</el-button> -->
+        <el-button
+          class="but"
+          type="primary"
+          @click="submitForm('ruleForm')"
+          v-loading.fullscreen.lock="fullscreenLoading"
+          element-loading-text="登陆中，请稍后！"
+        >登录</el-button>
         <span style="margin-left:80px">
-          没有账号，点击
-          <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">注册</a>
+          获取
+          <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">帮助</a>
         </span>
       </el-form-item>
     </el-form>
@@ -64,17 +69,27 @@ export default {
           },
         ],
       },
+      fullscreenLoading: false,
     };
   },
 
   components: {},
 
   methods: {
+    //loading效果
+    openFullScreen() {
+      this.fullscreenLoading = true;
+      setTimeout(() => {
+        this.fullscreenLoading = false;
+      }, 2000);
+    },
+
     goto() {
       this.$router.replace("/signin");
     },
 
     submitForm(data) {
+      this.openFullScreen();
       //任一输入框为空时弹框提醒
       if (!(this.ruleForm.username != "" && this.ruleForm.password != "")) {
         this.$message({
@@ -87,6 +102,7 @@ export default {
       this.$refs[data].validate((vali) => {
         if (vali) {
           //验证通过，发送登录请求
+
           this.checkLogin();
         }
       });
@@ -103,11 +119,11 @@ export default {
       try {
         const p = await Login.reqUsername(username);
         if (!p.data.state) {
-          //用户名不存在，提示去注册
+          //用户名不存在
           this.$message.warning({
-          showClose: true,
-          message: '用户名不存在，请注册',
-        });
+            showClose: true,
+            message: "用户名不存在，请核证后输入！",
+          });
         } else {
           //用户名存在，正常登录
           try {
@@ -144,17 +160,19 @@ export default {
         if (p.data.state) {
           //真正登陆成功
           //token正确，1、存储数据到localstorage，2、页面跳转，
-          this.$message({
-            //消息弹框
-            showClose: true,
-            message: "登录成功！",
-            type: "success",
-          });
           //1、存储用户名和token到本地
           localStorage.setItem("system-username", this.ruleForm.username);
           localStorage.setItem("system-token", token);
           //2、跳转，编程式导航
-          this.$router.push("/main");
+          setTimeout(() => {
+            this.$router.push("/main");
+            this.$message({
+              //消息弹框
+              showClose: true,
+              message: "登录成功！",
+              type: "success",
+            });
+          }, 1800);
         }
       } catch (error) {
         console.log("错误为：", error);

@@ -63,7 +63,7 @@ router.get('/:username', async (req, res) => {
   let info;
   try {
     const { username } = req.params;
-    const sql = `SELECT id, username,gender,age from user WHERE username='${username}'`;
+    const sql = `SELECT id, username,gender,age,date from user WHERE username='${username}'`;
     const data = await request(sql);
     if (data.length) {
       info = {

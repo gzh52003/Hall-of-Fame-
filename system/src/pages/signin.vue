@@ -10,7 +10,7 @@
       label-width="100px"
       class="form"
     >
-      <h2>欢迎注册</h2>
+      <!-- <h2>欢迎注册</h2>
       <el-form-item label="用户名" prop="username">
         <el-input type="text" v-model="ruleForm.username" @blur="goblur"></el-input>
       </el-form-item>
@@ -23,7 +23,12 @@
           已有账号，点击
           <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">登录</a>
         </span>
-      </el-form-item>
+      </el-form-item>-->
+      <h2 style="margin-top:80px">此系统仅限内部人员使用，暂不对外开放，抱歉！</h2>
+      <span>
+        返回
+        <a @click="goto" style="cursor:pointer;color:blue;font-weight:900">登录</a>
+      </span>
     </el-form>
   </div>
 </template>
@@ -156,7 +161,8 @@ export default {
   height: 320px;
   margin: auto;
   background-color: rgba(255, 255, 255, 0.815);
-  padding: 30px 40px 0 0;
+  /* padding: 30px 40px 0 0; */
+  padding: 30px 40px;
   border-radius: 14px;
 }
 .but {

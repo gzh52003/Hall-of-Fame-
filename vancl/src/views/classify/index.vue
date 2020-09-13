@@ -39,7 +39,6 @@
               class="tu"
             />
             <h4 class="text">{{item.name}}</h4>
-            <span style="color:red">￥{{item.price}}</span>
           </van-grid-item>
         </van-grid>
       </div>

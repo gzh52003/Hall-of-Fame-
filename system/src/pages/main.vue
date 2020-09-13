@@ -22,7 +22,12 @@
                 </span>
                 <el-dropdown-menu slot="dropdown">
                   <el-dropdown-item command="a" icon="el-icon-s-tools">设置</el-dropdown-item>
-                  <el-dropdown-item command="b" icon="el-icon-warning">退出</el-dropdown-item>
+                  <el-dropdown-item
+                    command="b"
+                    icon="el-icon-warning"
+                    v-loading.fullscreen.lock="fullscreenLoading"
+                       element-loading-text="退出登录"
+                  >退出</el-dropdown-item>
                 </el-dropdown-menu>
               </el-dropdown>
             </el-link>
@@ -128,10 +133,10 @@ export default {
               title: "添加商品",
               path: "/gdsAdd",
             },
-            {
+          /*   {
               title: "修改商品",
               path: "/gdsAlter",
-            },
+            }, */
           ],
         },
         {
@@ -156,9 +161,18 @@ export default {
       ],
       activeIndex: "/main/home",
       name: localStorage.getItem("system-username"),
+      fullscreenLoading: false,
     };
   },
   methods: {
+    //loading效果
+    openFullScreen() {
+      this.fullscreenLoading = true;
+      setTimeout(() => {
+        this.fullscreenLoading = false;
+      }, 2000);
+    },
+
     //功能：页面跳转
     goto(data) {
       this.$router.push(data); //编程式导航
@@ -167,6 +181,7 @@ export default {
     //功能：点击触发退出登录
     handleCommand(command) {
       if (command != "a") {
+        this.openFullScreen();
         //调用退出登录方法
         this.toOut();
       }
@@ -183,13 +198,15 @@ export default {
           localStorage.removeItem("system-token");
           localStorage.removeItem("system-username");
           //2、跳转登录页面
-          this.goto("/login");
-          //退出成功提示弹框
-          this.$message({
-            showClose: true,
-            message: "退出成功！",
-            type: "success",
-          });
+          setTimeout(() => {
+            this.goto("/login");
+            //退出成功提示弹框
+            this.$message({
+              showClose: true,
+              message: "退出成功！",
+              type: "success",
+            });
+          }, 1800);
         } else {
           //退出失败弹框
           this.$message({
@@ -262,10 +279,10 @@ body {
   }
 }
 .el-dropdown-link {
-  color: rgb(254,240,240);
+  color: rgb(254, 240, 240);
   font-size: 16px;
   .welcome {
-    color: rgb(64,158,255);
+    color: rgb(64, 158, 255);
     font-size: 15px;
   }
 }

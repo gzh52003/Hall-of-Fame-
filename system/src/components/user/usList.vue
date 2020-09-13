@@ -1,5 +1,6 @@
 <template>
   <div style="height:90%">
+    <!-- 查询框 -->
     <el-row :gutter="100" type="flex" justify="left" style="margin:30px 0px;">
       <el-col>
         <el-button type="success" icon="el-icon-back" plain circle v-if="sign" @click="goBack"></el-button>
@@ -9,10 +10,17 @@
           clearable
           style="width:200px;margin:0 10px"
         ></el-input>
-        <el-button type="primary" icon="el-icon-search" @click="Search">搜索</el-button>
+        <el-button
+          type="primary"
+          icon="el-icon-search"
+          @click="Search"
+          v-loading.fullscreen.lock="fullscreenLoading"
+          element-loading-text="查询用户中..."
+        >查询用户</el-button>
       </el-col>
     </el-row>
     <el-table
+      v-loading="loading"
       ref="multipleTable"
       :data="userList.slice((currentPage4-1)*pagesize,currentPage4*pagesize) "
       tooltip-effect="dark"
@@ -20,37 +28,13 @@
       @selection-change="handleSelectionChange"
       :default-sort="{prop: 'date', order: 'descending'}"
     >
-      <el-table-column
-        type="selection"
-        width="55"
-      ></el-table-column>
-      <el-table-column
-        prop="id"
-        label="序号"
-        sortable
-        width="120"
-      ></el-table-column>
-      <el-table-column
-        prop="username"
-        label="用户名"
-        min-width="120"
-      ></el-table-column>
-      <el-table-column
-        prop="gender"
-        label="性别"
-        min-width="120"
-      ></el-table-column>
-      <el-table-column
-        prop="age"
-        label="年龄"
-        sortable
-        min-width="120"
-      ></el-table-column>
-      <el-table-column
-        label="操作"
-        show-overflow-tooltip
-        width="200"
-      >
+      <el-table-column type="selection" width="55"></el-table-column>
+      <el-table-column type="index" label="序号" sortable width="120"></el-table-column>
+      <el-table-column prop="username" label="用户名" min-width="120"></el-table-column>
+      <el-table-column prop="gender" label="性别" min-width="120"></el-table-column>
+      <el-table-column prop="age" label="年龄" sortable min-width="120"></el-table-column>
+      <el-table-column prop="date" label="日期" sortable min-width="120"></el-table-column>
+      <el-table-column label="操作" show-overflow-tooltip width="200">
         <template v-slot:default="property">
           <!-- 修改按钮 -->
           <el-button
@@ -66,18 +50,11 @@
             title="确定删除吗？"
             @onConfirm="remove(property.row.id)"
             icon="el-icon-info"
-            
             iconColor="red"
             confirmButtonType="danger"
             cancelButtonType="primary"
           >
-            <el-button
-              slot="reference"
-              icon="el-icon-delete"
-              plain
-              type="danger"
-              circle
-            ></el-button>
+            <el-button slot="reference" icon="el-icon-delete" plain type="danger" circle></el-button>
           </el-popconfirm>
         </template>
       </el-table-column>
@@ -91,7 +68,7 @@
         :current-page="currentPage4"
         :page-sizes="[10,20,30,40,50]"
         :page-size="pagesize"
-        layout="total, sizes,prev, pager, next, jumper" 
+        layout="total, sizes,prev, pager, next, jumper"
         :total="userList.length"
         :hide-on-single-page="value"
       ></el-pagination>
@@ -106,19 +83,32 @@ export default {
     return {
       userList: [], //列表数据
       search: "", //搜索框数据
-      sign: "",   //返回按钮标识
+      sign: "", //返回按钮标识
       value: false,
       currentPage4: 1, //初始页
       pagesize: 10, //每页的数据
+      loading: false, //loaging
+      fullscreenLoading: false,
     };
   },
   components: {},
   created() {
     //一进页面，请求所有用户数据
-    this.checkUser();
+    this.loading = true;
+    setTimeout(() => {
+      this.checkUser();
+    }, 500);
   },
 
   methods: {
+    //搜索用户loading
+    openFullScreen() {
+      this.fullscreenLoading = true;
+      setTimeout(() => {
+        this.fullscreenLoading = false;
+      }, 1000);
+    },
+
     //功能：请求所有用户数据并响应到页面
     async checkUser() {
       try {
@@ -127,6 +117,7 @@ export default {
         if (p.data.state) {
           //有数据
           this.userList = p.data.data;
+          this.loading = false;
         } else {
           //无数据
           console.log("查询所有用户失败");
@@ -185,13 +176,16 @@ export default {
         });
       } else {
         try {
+          this.openFullScreen();
           // 有输入，发送用户名验证请求
           const p = await apiUser.reqUsername(this.search);
           if (p.data.state) {
             //用户名存在，显示信息
-            this.userList = p.data.data;
-            this.search = ""; //清空输入框
-            this.sign = true;
+            setTimeout(() => {
+              this.userList = p.data.data;
+              this.search = ""; //清空输入框
+              this.sign = true;
+            }, 500);
           } else {
             //用户名不存在，提示弹框，重新渲染数据
             this.$message({
@@ -221,8 +215,8 @@ export default {
     handleCurrentChange: function (currentPage4) {
       this.currentPage4 = currentPage4;
     },
-    handleSelectionChange() { },
-    formatter() { },
+    handleSelectionChange() {},
+    formatter() {},
   },
 };
 </script>

@@ -37,20 +37,21 @@ export default {
   },
 
   //修改用户
-  reqAlterUser(id, gender, age) {
+  reqAlterUser(id, gender, age, date) {
     return request({
       method: 'put',
       data: {
         id,
         gender,
-        age
+        age,
+        date
       },
       url: '/user'
     })
   },
 
   //添加用户
-  reqAdd(username, password, gender, age) {
+  reqAdd(username, password, gender, age, dateValue) {
     if (age == '') {
       age = null
     };
@@ -60,7 +61,8 @@ export default {
         username,
         gender,
         age,
-        password
+        password,
+        dateValue
       },
       url: '/user'
     })

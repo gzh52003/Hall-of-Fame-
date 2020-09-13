@@ -31,6 +31,43 @@
         >点击查看</van-button>
       </van-col>
     </van-row>
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i5.m.vancl.com/q80/wap/2019_5_24_10_4_52_3729.jpg"
+      @click="banner"
+    />
+
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i8.m.vancl.com/q80/wap/2020_7_2_10_27_44_789.jpg"
+      @click="banner"
+    />
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i9.m.vancl.com/q80/wap/2020_3_13_10_43_57_5679.jpg"
+      @click="banner"
+    />
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i2.m.vancl.com/q80/wap/2018_5_17_16_19_22_9179.jpg"
+      @click="banner"
+    />
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i1.m.vancl.com/q80/wap/2018_5_17_16_20_20_4258.jpg"
+      @click="banner"
+    />
+    <van-image
+      width="100%"
+      height="220"
+      src="http://i7.m.vancl.com/q80/wap/2020_7_2_10_28_27_9682.jpg"
+      @click="banner"
+    />
   </div>
 </template>
 

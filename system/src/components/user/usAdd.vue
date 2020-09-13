@@ -1,57 +1,73 @@
 <template>
-  <el-form
-    :model="ruleForm"
-    status-icon
-    :rules="rules"
-    ref="ruleForm"
-    class="demo-ruleForm"
-    style="width:300px; margin:auto;background:#fff;padding:40px 100px;border-radius:10px;position:relative"
-  >
-    <!-- 退出按钮 -->
-    <el-button
-      type="danger"
-      plain
-      size="mini"
-      @click="cancel"
-      icon="el-icon-close"
-      circle
-      style=" position: absolute;right:40px;top:30px"
-    ></el-button>
-    <!-- 重置按钮 -->
-     <el-button
-      type="success"
-      plain
-      size="mini"
-      @click="resetForm('ruleForm')"
-      icon="el-icon-refresh"
-      circle
-      style=" position: absolute;right:80px;top:30px"
-    ></el-button>
-    <el-form-item label="用户名：" prop="username">
-      <el-input type="text" clearable v-model.trim="ruleForm.username" @blur="verify"></el-input>
-    </el-form-item>
-    <el-form-item label="密码" prop="pass">
-      <el-input type="password" clearable v-model.trim="ruleForm.pass" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="确认密码" prop="checkPass">
-      <el-input type="password" clearable v-model.trim="ruleForm.checkPass" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="性别：" prop="gender">
-      <el-select v-model.number="ruleForm.gender" style="width:100px">
-        <el-option value="男"></el-option>
-        <el-option value="女"></el-option>
-        <el-option value="保密"></el-option>
-      </el-select>
-    </el-form-item>
-    <el-form-item label="年龄:" prop="age">
-      <el-input clearable v-model.number="ruleForm.age"></el-input>
-    </el-form-item>
-    <el-form-item style="margin:auto;">
-      <el-popconfirm title="确定添加这个用户吗？" @onConfirm="submitForm('ruleForm')" cancelButtonType="success">
-        <el-button type="primary" slot="reference" plain>添加</el-button>
-      </el-popconfirm>
-    </el-form-item>
-  </el-form>
+  <div>
+    <el-header style="height:50px;line-height:50px;margin-bottom:50px">添加用户</el-header>
+    <el-form
+      :model="ruleForm"
+      status-icon
+      :rules="rules"
+      ref="ruleForm"
+      class="demo-ruleForm"
+      style="width:300px; margin:auto;background:#fff;padding:40px 100px;border-radius:10px;position:relative"
+    >
+      <!-- 退出按钮 -->
+      <el-button
+        type="danger"
+        plain
+        size="mini"
+        @click="cancel"
+        icon="el-icon-close"
+        circle
+        style=" position: absolute;right:40px;top:30px"
+      ></el-button>
+      <!-- 重置按钮 -->
+      <el-button
+        type="success"
+        plain
+        size="mini"
+        @click="resetForm('ruleForm')"
+        icon="el-icon-refresh"
+        circle
+        style=" position: absolute;right:80px;top:30px"
+      ></el-button>
+      <el-form-item label="用户名：" prop="username">
+        <el-input type="text" clearable v-model.trim="ruleForm.username" @blur="verify"></el-input>
+      </el-form-item>
+      <el-form-item label="密码" prop="pass">
+        <el-input type="password" clearable v-model.trim="ruleForm.pass" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="确认密码" prop="checkPass">
+        <el-input type="password" clearable v-model.trim="ruleForm.checkPass" autocomplete="off"></el-input>
+      </el-form-item>
+      <el-form-item label="性别：" prop="gender">
+        <el-select v-model.number="ruleForm.gender" style="width:100px">
+          <el-option value="男"></el-option>
+          <el-option value="女"></el-option>
+          <el-option value="保密"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="年龄:" prop="age">
+        <el-input clearable v-model.number="ruleForm.age"></el-input>
+      </el-form-item>
+      <el-form-item label="日期:" prop>
+        <el-date-picker
+          v-model="dateValue"
+          type="date"
+          placeholder="选择日期"
+          format="yyyy 年 MM 月 dd 日"
+          value-format="yyyy-MM-dd"
+        ></el-date-picker>
+      </el-form-item>
+      <el-form-item style="margin:auto;">
+        <el-popconfirm
+          title="确定添加这个用户吗？"
+          @onConfirm="submitForm('ruleForm')"
+          cancelButtonType="success"
+        >
+          <el-button type="primary" slot="reference" plain>添加</el-button>
+        </el-popconfirm>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 <script>
 import userApi from "@/api/user";
@@ -107,6 +123,7 @@ export default {
         age: "",
       },
       sign: "", //标识
+      dateValue: "", //用户日期
 
       //使用定义校验规则
       rules: {
@@ -170,11 +187,12 @@ export default {
                 this.ruleForm.username,
                 this.ruleForm.checkPass,
                 this.ruleForm.gender,
-                this.ruleForm.age
+                this.ruleForm.age,
+                this.dateValue
               );
               if (p.data.state) {
                 //添加成功，重置表单
-                 this.resetForm('ruleForm');
+                this.resetForm("ruleForm");
                 this.$message({
                   showClose: true,
                   message: "添加用户成功！",
@@ -241,6 +259,7 @@ export default {
     //功能：点击触发重置表单
     resetForm(formName) {
       this.$refs[formName].resetFields();
+      this.dateValue = "";
     },
   },
 };

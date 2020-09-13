@@ -1,40 +1,43 @@
 <template>
-  <el-form
-    :model="ruleForm"
-    :rules="rules"
-    ref="ruleForm"
-    label-width="100px"
-    class="demo-ruleForm"
-  >
-    <el-form-item label="添加时间" required>
-      <el-col :span="11">
-        <el-form-item prop="date">
-          <el-date-picker
-            type="date"
-            placeholder="选择日期"
-            v-model="ruleForm.date"
-            style="width: 80%;"
-          ></el-date-picker>
-        </el-form-item>
-      </el-col>
-    </el-form-item>
-    <el-form-item label="商品名称" prop="name" style="width: 60%;">
-      <el-input v-model="ruleForm.name"></el-input>
-    </el-form-item>
-    <el-form-item label="商品产地" prop="place" style="width: 60%;">
-      <el-input v-model="ruleForm.place"></el-input>
-    </el-form-item>
-    <el-form-item label="商品价格" prop="price" style="width: 60%;">
-      <el-input v-model="ruleForm.price"></el-input>
-    </el-form-item>
-    <el-form-item label="商品编码" prop="zip" style="width: 60%;">
-      <el-input v-model="ruleForm.zip"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">立即添加</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
-    </el-form-item>
-  </el-form>
+  <div>
+    <el-header style="height:50px;line-height:50px;margin-bottom:20px">添加商品</el-header>
+    <el-form
+      :model="ruleForm"
+      :rules="rules"
+      ref="ruleForm"
+      label-width="100px"
+      class="demo-ruleForm"
+    >
+      <el-form-item label="添加时间" required>
+        <el-col :span="11">
+          <el-form-item prop="date">
+            <el-date-picker
+              type="date"
+              placeholder="选择日期"
+              v-model="ruleForm.date"
+              style="width: 80%;"
+            ></el-date-picker>
+          </el-form-item>
+        </el-col>
+      </el-form-item>
+      <el-form-item label="商品名称" prop="name" style="width: 60%;">
+        <el-input v-model="ruleForm.name"></el-input>
+      </el-form-item>
+      <el-form-item label="商品产地" prop="place" style="width: 60%;">
+        <el-input v-model="ruleForm.place"></el-input>
+      </el-form-item>
+      <el-form-item label="商品价格" prop="price" style="width: 60%;">
+        <el-input v-model="ruleForm.price"></el-input>
+      </el-form-item>
+      <el-form-item label="商品编码" prop="zip" style="width: 60%;">
+        <el-input v-model="ruleForm.zip"></el-input>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" @click="submitForm('ruleForm')">立即添加</el-button>
+        <el-button @click="resetForm('ruleForm')">重置</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
