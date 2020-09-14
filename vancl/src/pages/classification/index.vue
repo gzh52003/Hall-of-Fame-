@@ -8,6 +8,25 @@
       @click-left="guo"
     >
     </van-nav-bar>
+    <!-- 排序-->
+    <van-row>
+      <van-col span="12">
+        <van-button
+          type="primary"
+          @click="onepice"
+        >原价升序</van-button>
+
+      </van-col>
+      <van-col
+        span="12"
+        class="pice"
+      >
+        <van-button
+          type="info"
+          @click="teopice"
+        >原价降序</van-button>
+      </van-col>
+    </van-row>
     <div class="context">
       <van-grid
         :border="false"
@@ -38,7 +57,9 @@ import { Toast, NavBar } from 'vant';
 import { Sidebar, SidebarItem } from 'vant';
 import { Grid, GridItem } from 'vant';
 import { Icon } from 'vant';
+import { Button } from 'vant';
 
+Vue.use(Button);
 Vue.use(Icon);
 Vue.use(Grid);
 Vue.use(GridItem);
@@ -70,7 +91,17 @@ export default {
     //点击获取商品的详细信息
     gotolist(id) {
       this.$router.replace('/goodslist' + id)
+    },
+    //点击价格排序
+    //原价升序
+    onepice() {
+
+    },
+    //原价降序
+    teopice() {
+
     }
+
   },
   created() {
     this.getlistgoods()
@@ -87,5 +118,9 @@ export default {
 ::v-deep .van-nav-bar__title {
   font-size: 20px;
   color: aliceblue;
+}
+.pice {
+  position: relative;
+  right: -100px;
 }
 </style>
