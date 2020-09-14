@@ -1,7 +1,7 @@
 import request from '@/tool/axios';
 
 export default {
-  
+
   //根据id查询商品信息
   reqGoods(id) {
     return request({
@@ -19,6 +19,14 @@ export default {
         num
       },
       url: '/goodslist'
+    })
+  },
+
+  //商品排序
+  reqSort(data) {
+    return request({
+      method: 'get',
+      url: '/goodslist?id=' + data
     })
   }
 }

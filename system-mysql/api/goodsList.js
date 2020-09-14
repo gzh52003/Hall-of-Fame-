@@ -75,17 +75,38 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-
-
-
-
-
-
-
-
-
-
-
+//商品排序desc\asc
+router.get('/', async (req, res) => {
+  try {
+    const {id} = req.query;
+    //res.send(id);
+    const sql = `select * from goodslist WHERE price>1 order by oldPrice ${id};`;
+    const data = await request(sql);
+    let info = {};
+    if (data) {
+      info = {
+        code: 200,
+        state: true,
+        data,
+        meg: "查询成功"
+      }
+    } else {
+      info = {
+        code: 300,
+        state: false,
+        meg: "查询失败"
+      }
+    }
+    res.send(info)
+  } catch (error) {
+    let info = {
+      code: error,
+      state: false,
+      meg: "查询失败"
+    }
+    res.send(info)
+  }
+})
 
 //删除商品
 router.delete('/:id', async (req, res) => {
