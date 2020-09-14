@@ -92,6 +92,7 @@ Vue.use(Toast);
 Vue.use(NavBar);
 export default {
   data() {
+
     return {
     }
   },
