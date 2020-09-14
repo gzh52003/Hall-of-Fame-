@@ -13,7 +13,7 @@
       <van-col span="12">
         <van-button
           type="primary"
-          @click="onepice"
+          @click="onepice('asc')"
         >原价升序</van-button>
 
       </van-col>
@@ -23,7 +23,7 @@
       >
         <van-button
           type="info"
-          @click="teopice"
+          @click="teopice('desc')"
         >原价降序</van-button>
       </van-col>
     </van-row>
@@ -42,8 +42,11 @@
             :src="item.imgurl"
             class="tu"
           />
-          <h4 class="text">{{item.name}}</h4>
-          <span style="color:red">￥{{item.price}}</span>
+          <h5 style="margin:10px 0">{{item.name}}</h5>
+          <p class="price">
+            <del>{{item.oldPrice}}</del>
+            <span>{{item.price}}</span>
+          </p>
         </van-grid-item>
       </van-grid>
     </div>
@@ -54,12 +57,6 @@
 import Vue from "vue";
 import requset from "@/api/goodsApi";
 import { NavBar, Grid, GridItem, Button } from 'vant';
-
-// import { Toast, NavBar } from 'vant';
-// import { Sidebar, SidebarItem } from 'vant';
-// import { Grid, GridItem } from 'vant';
-// import { Icon } from 'vant';
-// import { Button } from 'vant';
 
 Vue.use(Button);
 Vue.use(Grid);
@@ -92,12 +89,13 @@ export default {
     },
     //点击价格排序
     //原价升序
-    onepice() {
-
+    async onepice(id) {
+      const { data } = await requset.reqSort(id);
+      this.goodsList = data.data;
     },
     //原价降序
-    teopice() {
-
+    teopice(id) {
+      this.onepice(id);
     }
 
   },
